@@ -1,0 +1,1 @@
+CALL sp_delete_project(10001, 101);

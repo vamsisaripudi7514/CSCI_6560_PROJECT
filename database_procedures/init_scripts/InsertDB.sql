@@ -210,3 +210,67 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
   (5, 'user_roles', 0, 0, 0, 0),
   (5, 'access_permissions', 0, 0, 0, 0),
   (5, 'audit_logs', 0, 0, 0, 0);
+  
+INSERT INTO employee_projects (employee_id, project_id) VALUES
+  -- Manager 30001's projects:
+  -- Project 101: Team from Team Leader 40001
+  (30001, 101),
+  (40001, 101),
+  (50001, 101),
+  (50002, 101),
+  (50003, 101),
+  
+  -- Project 102: Team from Team Leader 40002
+  (30001, 102),
+  (40002, 102),
+  (50004, 102),
+  (50005, 102),
+  (50006, 102),
+  
+  -- Manager 30002's projects:
+  -- Project 103: Team from Team Leader 40003
+  (30002, 103),
+  (40003, 103),
+  (50007, 103),
+  (50008, 103),
+  (50009, 103),
+  
+  -- Project 104: Team from Team Leader 40004
+  (30002, 104),
+  (40004, 104),
+  (50010, 104),
+  (50011, 104),
+  (50012, 104),
+  
+  -- Manager 30003's projects:
+  -- Project 105: Team from Team Leader 40005
+  (30003, 105),
+  (40005, 105),
+  (50013, 105),
+  (50014, 105),
+  (50015, 105),
+  
+  -- Project 106: Team from Team Leader 40006
+  (30003, 106),
+  (40006, 106),
+  (50016, 106),
+  (50017, 106),
+  (50018, 106),
+  
+  -- Manager 30004's projects:
+  -- Project 107: Team from Team Leader 40007
+  (30004, 107),
+  (40007, 107),
+  (50019, 107),
+  (50020, 107),
+  (50021, 107),
+  
+  -- Project 108: Team from Team Leader 40008
+  (30004, 108),
+  (40008, 108),
+  (50022, 108),
+  (50023, 108),
+  (50024, 108);
+  
+  
+

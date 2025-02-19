@@ -1,0 +1,108 @@
+Hey GPT, I am working on a project for my CSCI 6560 course, which involves implementing a **role-based hierarchical access control system** using **MySQL stored procedures**. My use case consists of the following roles:
+- **Director**
+- **Project Manager**
+- **Team Leader**
+- **Developer**
+
+The system follows a **tree structure** where each node (user) has access to data of **itself and all child nodes** below it.
+
+### **System Features & Constraints**
+- **Users authenticate using username/password** and are assigned a role.
+- **Access permissions are stored in an `access_permissions` table**, defining CRUD rights for each role.
+- **All actions (CRUD) are logged in an `audit_logs` table** which is a stored procedure that is called at the end of each stored_procedure with relavent inputs.
+- **Sensitive fields (passwords, salaries) are encrypted using AES** in MySQL.
+- **Stored procedures are used for all database interactions** to enforce access control.
+
+---
+
+### **Stored Procedure Architecture**
+I have structured the stored procedures into four layers:
+
+#### **Layer 1: Access Control Procedures**
+- `Check_User_Access(user_id, table_name, operation, OUT is_allowed)`: Checks if a user has CRUD rights on a table.
+- `Check_Employee_Hierarchy(user_id, target_employee_id, OUT is_valid)`: Ensures a user can only access employees under them.
+
+#### **Layer 2: Authentication & Session Management**
+- `SP_User_Login(username, password, OUT jwt_token)`: Handles user authentication.
+- `SP_Get_User_Info(user_id)`: Fetches user details for the profile page.
+- `SP_Update_User_Password(user_id, new_encrypted_password)`: Updates user passwords securely.
+
+#### **Layer 3: CRUD Operations**
+Each table has multiple stored procedures:
+
+##### **Employees Table**
+- `SP_Get_Hierarchy_Employees(user_id)`: Returns employees under the logged-in user.
+- `SP_Search_Employee(user_id, search_employee_id)`: Searches for an employee and validates access.
+- `SP_Get_Employee_Details(user_id, employee_id)`: Returns an employee's full details.
+- `SP_Select_Employee(user_id, employee_id)`: Fetches an employee’s details if authorized.
+- `SP_Insert_Employee(user_id, employee_data)`: Adds a new employee **(Admin/Director only)**.
+- `SP_Update_Employee(user_id, employee_id, updated_data)`: Updates an employee record **(Managers can update their subordinates)**.
+- `SP_Delete_Employee(user_id, employee_id)`: Deletes an employee **(Admin/Director only)**.
+
+##### **Projects Table**
+- `SP_Select_Project(user_id, project_id)`: Fetches project details if authorized.
+- `SP_Insert_Project(user_id, project_data)`: Creates a new project **(Admin/Director only)**.
+- `SP_Update_Project(user_id, project_id, updated_data)`: Updates a project **(Managers can update their projects)**.
+- `SP_Delete_Project(user_id, project_id)`: Deletes a project **(Admin/Director only)**.
+
+##### **Timesheets Table**
+- `SP_Select_Timesheet(user_id, timesheet_id)`: Fetches timesheet details if authorized.
+- `SP_Insert_Timesheet(user_id, timesheet_data)`: Allows employees to log work hours.
+- `SP_Update_Timesheet(user_id, timesheet_id, updated_data)`: Updates timesheets if authorized.
+- `SP_Delete_Timesheet(user_id, timesheet_id)`: Deletes a timesheet **(Admin only)**.
+
+#### **Layer 4: Logging & Security Procedures**
+- `SP_Log_Audit(user_id, action_type, table_name, record_id)`: Logs all database actions.
+- `SP_Encrypt_Data(raw_value, OUT encrypted_value)`: Encrypts sensitive data before storing.
+- `SP_Decrypt_Data(encrypted_value, OUT raw_value)`: Decrypts sensitive data when required.
+
+---
+
+### **Folder Structure for Stored Procedures**
+I have structured my stored procedures as follows:
+
+/database_procedures
+│── /access_control
+│   ├── check_user_access.sql
+│   ├── check_employee_hierarchy.sql
+│── /authentication
+│   ├── user_login.sql
+│   ├── get_user_info.sql
+│   ├── update_user_password.sql
+│── /crud_operations
+│   ├── /employees
+│   │   ├── select_employee.sql
+│   │   ├── insert_employee.sql
+│   │   ├── update_employee.sql
+│   │   ├── delete_employee.sql
+│   │   ├── get_hierarchy_employees.sql
+│   │   ├── search_employee.sql
+│   │   ├── get_employee_details.sql
+│   ├── /projects
+│   │   ├── select_project.sql
+│   │   ├── insert_project.sql
+│   │   ├── update_project.sql
+│   │   ├── delete_project.sql
+│   ├── /timesheets
+│   │   ├── select_timesheet.sql
+│   │   ├── insert_timesheet.sql
+│   │   ├── update_timesheet.sql
+│   │   ├── delete_timesheet.sql
+│── /logging_and_security
+│   ├── log_audit.sql
+│   ├── encrypt_data.sql
+│   ├── decrypt_data.sql
+│── /init_scripts
+│   ├── create_schema.sql
+│   ├── seed_data.sql
+│   ├── create_indexes.sql
+│── README.md
+
+---
+
+### **What I Need Help With**
+1. **Best practices for MySQL stored procedures in hierarchical access control systems**.
+2. **Optimizing stored procedures for better performance**.
+3. **Generating stored procedures for missing functionalities**.
+4. **Refining role-based access checks for scalability**.
+5. **Ensuring my encryption & logging approach is secure**.

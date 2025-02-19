@@ -83,6 +83,14 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS employee_projects (
+    employee_id INT,
+    project_id INT,
+    PRIMARY KEY (employee_id, project_id),
+    FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE,
+    FOREIGN KEY (project_id) REFERENCES projects(project_id) ON DELETE CASCADE
+);
+
 CREATE INDEX idx_employees_manager_id ON employees(manager_id);
 CREATE INDEX idx_access_permissions_role ON access_permissions(role_id);
 CREATE INDEX idx_audit_logs_user ON audit_logs(user_id);

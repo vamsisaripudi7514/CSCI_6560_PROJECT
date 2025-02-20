@@ -26,7 +26,6 @@ BEGIN
           FROM employees
          WHERE manager_id = p_user_id
         UNION ALL
-        -- Recursively add employees reporting to the direct reports.
         SELECT e.employee_id,
                e.employee_name,
                e.manager_id,

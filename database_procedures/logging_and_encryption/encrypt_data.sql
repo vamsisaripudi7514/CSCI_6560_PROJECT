@@ -1,15 +1,24 @@
 DELIMITER $$
+
 CREATE PROCEDURE sp_encrypt_data(
     IN raw_value VARCHAR(255),
-    IN purpose ENUM('password','salary'),
+    IN purpose ENUM('password', 'salary'),
+    IN encryption_key VARCHAR(64),
     OUT encrypted_value BLOB
 )
 BEGIN
+    DECLARE temp_value BLOB;
+
     IF purpose = 'password' THEN
-        SET encrypted_value = AES_ENCRYPT(raw_value, UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1'));
+        SELECT AES_ENCRYPT(raw_value, UNHEX(encryption_key)) INTO temp_value;
     ELSEIF purpose = 'salary' THEN
-        SET encrypted_value = AES_ENCRYPT(raw_value, UNHEX('B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613'));
-    END IF;    
+        SELECT AES_ENCRYPT(raw_value, UNHEX(encryption_key)) INTO temp_value;
+    END IF;
+
+    SET encrypted_value = temp_value;
 END$$
 
 DELIMITER ;
+
+
+-- DROP PROCEDURE IF EXISTS sp_encrypt_data;

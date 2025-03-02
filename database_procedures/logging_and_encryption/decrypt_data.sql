@@ -3,24 +3,29 @@ DELIMITER $$
 CREATE PROCEDURE sp_decrypt_data(
     IN encrypted_value BLOB,
     IN purpose ENUM('password','salary'),
+    IN decryption_key VARCHAR(64),
     OUT decrypted_value VARCHAR(255)
 )
 BEGIN
+    DECLARE temp_value VARCHAR(255);
     IF purpose = 'password' THEN
-        SET decrypted_value = CAST(
+        SELECT CAST(
             AES_DECRYPT(
                 encrypted_value, 
-                UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')
+                UNHEX(decryption_key)
             ) AS CHAR(255)
-        );
+        ) INTO temp_value;
     ELSEIF purpose = 'salary' THEN
-        SET decrypted_value = CAST(
+        SELECT CAST(
             AES_DECRYPT(
                 encrypted_value, 
-                UNHEX('B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613')
+                UNHEX(decryption_key)
             ) AS CHAR(255)
-        );
+        ) INTO temp_value;
     END IF;
+    SET decrypted_value = temp_value;
 END$$
 
 DELIMITER ;
+
+-- DROP PROCEDURE IF EXISTS sp_decrypt_data;

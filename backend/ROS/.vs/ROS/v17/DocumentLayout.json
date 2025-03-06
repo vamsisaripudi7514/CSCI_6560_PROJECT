@@ -1,0 +1,276 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\rbacit_dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\rbacit_dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\accesspermission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\accesspermission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\project.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\project.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\employeeproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\employeeproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF6E152F-C414-406D-836E-037FF9884CBD}|ROS.API\\ROS.API.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DF6E152F-C414-406D-836E-037FF9884CBD}|ROS.API\\ROS.API.csproj|solutionrelative:ros.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF6E152F-C414-406D-836E-037FF9884CBD}|ROS.API\\ROS.API.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF6E152F-C414-406D-836E-037FF9884CBD}|ROS.API\\ROS.API.csproj|solutionrelative:ros.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\timesheet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\timesheet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.model\\tables\\auditlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB31E82B-3730-49BB-8E9D-CD4E3D7F9560}|ROS.Model\\ROS.Model.csproj|solutionrelative:ros.model\\tables\\auditlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85E377E1-9F87-4691-B96E-AC93483D6BAA}|ROS.UI\\ROS.UI.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.ui\\views\\shared\\_adminltesidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{85E377E1-9F87-4691-B96E-AC93483D6BAA}|ROS.UI\\ROS.UI.csproj|solutionrelative:ros.ui\\views\\shared\\_adminltesidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{85E377E1-9F87-4691-B96E-AC93483D6BAA}|ROS.UI\\ROS.UI.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.ui\\views\\shared\\_adminlteheader.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{85E377E1-9F87-4691-B96E-AC93483D6BAA}|ROS.UI\\ROS.UI.csproj|solutionrelative:ros.ui\\views\\shared\\_adminlteheader.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF6E152F-C414-406D-836E-037FF9884CBD}|ROS.API\\ROS.API.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF6E152F-C414-406D-836E-037FF9884CBD}|ROS.API\\ROS.API.csproj|solutionrelative:ros.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{229DFAF8-1EF6-453F-95CC-449C8754A182}|ROS.Implement\\ROS.Implement.csproj|d:\\mtsu sem2\\st db\\project code\\code\\ros\\ros\\ros.implement\\repository\\authrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{229DFAF8-1EF6-453F-95CC-449C8754A182}|ROS.Implement\\ROS.Implement.csproj|solutionrelative:ros.implement\\repository\\authrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 285,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.API\\appsettings.json",
+              "RelativeDocumentMoniker": "ROS.API\\appsettings.json",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.API\\appsettings.json",
+              "RelativeToolTip": "ROS.API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-20T14:05:02.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RbacIT_DbContext.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\RbacIT_DbContext.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\RbacIT_DbContext.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\RbacIT_DbContext.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\RbacIT_DbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAJsAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:58:02.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmployeeProject.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\EmployeeProject.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\EmployeeProject.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\EmployeeProject.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\EmployeeProject.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:52:10.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\User.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\User.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\User.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\User.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAACIAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:51:41.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AuditLog.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\AuditLog.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\AuditLog.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\AuditLog.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\AuditLog.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:51:13.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Timesheet.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\Timesheet.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\Timesheet.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\Timesheet.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\Timesheet.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAswCUAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:50:29.932Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Project.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\Project.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\Project.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\Project.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\Project.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA0AAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:49:37.884Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccessPermission.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\AccessPermission.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\AccessPermission.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\AccessPermission.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\AccessPermission.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAA1wCQAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:48:48.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\Employee.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\Employee.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\Employee.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\Employee.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAmwAwAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:47:44.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserRole.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\UserRole.cs",
+              "RelativeDocumentMoniker": "ROS.Model\\Tables\\UserRole.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Model\\Tables\\UserRole.cs",
+              "RelativeToolTip": "ROS.Model\\Tables\\UserRole.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-20T13:44:57.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "_AdminLTESidebar.cshtml",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.UI\\Views\\Shared\\_AdminLTESidebar.cshtml",
+              "RelativeDocumentMoniker": "ROS.UI\\Views\\Shared\\_AdminLTESidebar.cshtml",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.UI\\Views\\Shared\\_AdminLTESidebar.cshtml",
+              "RelativeToolTip": "ROS.UI\\Views\\Shared\\_AdminLTESidebar.cshtml",
+              "ViewState": "AQIAADAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-19T06:47:12.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "_AdminLTEHeader.cshtml",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.UI\\Views\\Shared\\_AdminLTEHeader.cshtml",
+              "RelativeDocumentMoniker": "ROS.UI\\Views\\Shared\\_AdminLTEHeader.cshtml",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.UI\\Views\\Shared\\_AdminLTEHeader.cshtml",
+              "RelativeToolTip": "ROS.UI\\Views\\Shared\\_AdminLTEHeader.cshtml",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAjwFEAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-19T06:45:05.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "ROS.API\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "ROS.API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T06:34:10.656Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.API\\Program.cs",
+              "RelativeDocumentMoniker": "ROS.API\\Program.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.API\\Program.cs",
+              "RelativeToolTip": "ROS.API\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAABiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T06:32:32.036Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AuthRepository.cs",
+              "DocumentMoniker": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Implement\\Repository\\AuthRepository.cs",
+              "RelativeDocumentMoniker": "ROS.Implement\\Repository\\AuthRepository.cs",
+              "ToolTip": "D:\\MTSU SEM2\\ST DB\\project code\\code\\ROS\\ROS\\ROS.Implement\\Repository\\AuthRepository.cs",
+              "RelativeToolTip": "ROS.Implement\\Repository\\AuthRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-19T06:32:00.253Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+C:\Users\Divye\source\repos\ROS\ROS.Model\bin\Debug\net8.0\ROS.Model.deps.json
+C:\Users\Divye\source\repos\ROS\ROS.Model\bin\Debug\net8.0\ROS.Model.dll
+C:\Users\Divye\source\repos\ROS\ROS.Model\bin\Debug\net8.0\ROS.Model.pdb
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\ROS.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\ROS.Model.AssemblyInfoInputs.cache
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\ROS.Model.AssemblyInfo.cs
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\ROS.Model.csproj.CoreCompileInputs.cache
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\ROS.Model.dll
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\refint\ROS.Model.dll
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\ROS.Model.pdb
+C:\Users\Divye\source\repos\ROS\ROS.Model\obj\Debug\net8.0\ref\ROS.Model.dll

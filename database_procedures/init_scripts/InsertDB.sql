@@ -6,13 +6,16 @@ INSERT INTO user_roles (role_id, role_name, role_description) VALUES
   (2, 'Director', 'Director with oversight of managers and team leaders'),
   (3, 'Manager', 'Project Manager with access to team information'),
   (4, 'Team Leader', 'Team Leader responsible for team operations'),
-  (5, 'Developer', 'Developer with limited access');
+  (5, 'Developer', 'Developer with limited access'),
+  (6, 'HR', 'Human Resources with full CRUD on employees, read on projects and timesheets, and read on audit_logs');
 
 -- -----------------------------------------------------------
 -- 2. Insert Employees (Using 5-digit IDs and hierarchy)
 
 -- Director (using a 5-digit ID; here we use 20001)
 INSERT INTO employees (employee_id, employee_name, email, phone, role_id, manager_id, encrypted_salary, hire_date, is_working) VALUES
+ (1,'Admin','admin1@example.com','111-111',1,NULL,AES_ENCRYPT('100000', UNHEX('B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613')),'2020-01-02',TRUE),
+  (10001, 'HR User', 'hr@example.com', '555-0101', 6, NULL,AES_ENCRYPT('50000', UNHEX('B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613')),'2022-01-01', TRUE),
   (20001, 'Director One', 'director@example.com', '111-111-1111', 2, NULL, AES_ENCRYPT('100000', UNHEX('B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613')), '2020-01-01', TRUE),
 
   (30001, 'Manager One', 'manager1@example.com', '222-111-1111', 3, 20001, AES_ENCRYPT('80000', UNHEX('B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613')), '2020-02-01', TRUE),
@@ -119,6 +122,7 @@ INSERT INTO audit_logs (log_id, user_id, db_action, db_table_name, record_id) VA
 -- -----------------------------------------------------------
 -- 6. Insert Users (Login credentials for the employees)
 INSERT INTO users (employee_id, username, user_password, last_login, failed_attempts, is_locked) VALUES
+  (10001, 'hr',AES_ENCRYPT('hr_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')),NOW(), 0, FALSE),
   (20001, 'director', AES_ENCRYPT('director_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')), NOW(), 0, FALSE),
   (30001, 'manager1', AES_ENCRYPT('manager_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')), NOW(), 0, FALSE),
   (30002, 'manager2', AES_ENCRYPT('manager_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')), NOW(), 0, FALSE),
@@ -174,22 +178,23 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
 -- Director (role_id 2):
 -- employees & projects: CRUD; timesheets, user_roles, access_permissions: Read only; audit_logs: CRUD.
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
-  (2, 'employees', 1, 1, 1, 1),
+  (2, 'employees', 1, 0, 0, 0),
   (2, 'projects', 1, 1, 1, 1),
   (2, 'timesheets', 1, 0, 0, 0),
-  (2, 'user_roles', 1, 0, 0, 0),
-  (2, 'access_permissions', 1, 0, 0, 0),
-  (2, 'audit_logs', 1, 1, 1, 1);
+  (2, 'user_roles', 0, 0, 0, 0),
+  (2, 'access_permissions', 0, 0, 0, 0),
+  (2, 'audit_logs', 1, 0, 0, 0);
 
 -- Manager (role_id 3):
 -- employees & projects: Read and Update; timesheets: Read only; user_roles & access_permissions: None; audit_logs: Read.
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
-  (3, 'employees', 1, 0, 1, 0),
+  (3, 'employees', 1, 0, 0, 0),
   (3, 'projects', 1, 0, 1, 0),
   (3, 'timesheets', 1, 0, 0, 0),
   (3, 'user_roles', 0, 0, 0, 0),
   (3, 'access_permissions', 0, 0, 0, 0),
-  (3, 'audit_logs', 1, 0, 0, 0);
+  (3, 'audit_logs', 0, 0, 0, 0);
+
 
 -- Team Leader (role_id 4):
 -- All tables: Read only (except user_roles and access_permissions, which are None), audit_logs: Read.
@@ -199,7 +204,7 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
   (4, 'timesheets', 1, 0, 0, 0),
   (4, 'user_roles', 0, 0, 0, 0),
   (4, 'access_permissions', 0, 0, 0, 0),
-  (4, 'audit_logs', 1, 0, 0, 0);
+  (4, 'audit_logs', 0, 0, 0, 0);
 
 -- Developer (role_id 5):
 -- employees, projects & timesheets: Read only; no access to user_roles, access_permissions or audit_logs.
@@ -210,6 +215,18 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
   (5, 'user_roles', 0, 0, 0, 0),
   (5, 'access_permissions', 0, 0, 0, 0),
   (5, 'audit_logs', 0, 0, 0, 0);
+ 
+ --    According to the matrix: employees (CRUD), projects (R), timesheets (R),
+--    user_roles (None), access_permissions (None), audit_logs (R)
+INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
+  (6, 'employees', 1, 1, 1, 1),
+  (6, 'projects', 1, 0, 0, 0),
+  (6, 'timesheets', 1, 0, 0, 0),
+  (6, 'user_roles', 0, 0, 0, 0),
+  (6, 'access_permissions', 0, 0, 0, 0),
+  (6, 'audit_logs', 1, 0, 0, 0);
+
+
   
 INSERT INTO employee_projects (employee_id, project_id) VALUES
   -- Manager 30001's projects:

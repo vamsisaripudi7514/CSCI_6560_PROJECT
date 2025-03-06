@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS
   audit_logs,
   users,
   timesheets,
+  employee_projects,
   projects,
   access_permissions,
   employees,

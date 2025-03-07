@@ -4,6 +4,7 @@ DELIMITER $$
 CREATE PROCEDURE sp_user_login(
     IN p_username VARCHAR(50),
     IN p_user_password VARCHAR(255),
+    IN p_decryption_key VARCHAR(64),
     OUT p_user_id INT
 )
 BEGIN
@@ -23,7 +24,7 @@ BEGIN
          LIMIT 1;
          
         -- Decrypt the stored password using sp_decrypt_data
-        CALL sp_decrypt_data(v_encrypted_password, 'password', v_decrypted_password);
+        CALL sp_decrypt_data(v_encrypted_password, 'password',p_decryption_key, v_decrypted_password);
         
         -- Compare decrypted password with the provided password
         IF v_decrypted_password = p_user_password THEN

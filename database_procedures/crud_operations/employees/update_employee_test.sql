@@ -1,0 +1,19 @@
+CALL sp_update_employee(10001,50002,'Updated John Doe', 'john_doe_updated@gmail.com',
+'39842984387',5,40001,'55000',TRUE,'B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613');
+SELECT * FROM employees WHERE employee_id = 50002;
+-- Success
+
+CALL sp_update_employee(10001,500020,'Updated John Doe', 'john_doe_updated@gmail.com',
+'39842984387',5,40001,'55000',TRUE,'B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613');
+SELECT * FROM employees WHERE employee_id = 500020;
+-- Success
+
+CALL sp_update_employee(20001,50002,'Updated John Doe', 'john_doe_updated@gmail.com',
+'39842984387',5,40001,'55000',TRUE,'B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613');
+SELECT * FROM employees WHERE employee_id = 50002;
+-- Failure
+
+CALL sp_update_employee(30001,50002,'Updated John Doe', 'john_doe_updated@gmail.com',
+'39842984387',5,40001,'55000',TRUE,'B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613');
+SELECT * FROM employees WHERE employee_id = 50002;
+-- Failure

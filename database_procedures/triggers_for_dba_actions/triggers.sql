@@ -9,7 +9,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'INSERT', 'employees', NEW.employee_id);
+        VALUES(1, 'INSERT', 'employees', NEW.employee_id);
     END IF;
 END$$
 
@@ -19,7 +19,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'UPDATE', 'employees', NEW.employee_id);
+        VALUES(1, 'UPDATE', 'employees', NEW.employee_id);
     END IF;
 END$$
 
@@ -36,15 +36,18 @@ END$$
 /* ===============================
    Access_Permissions Table Triggers
    =============================== */
+-- DELIMITER $$
 CREATE TRIGGER trg_access_permissions_after_insert
 AFTER INSERT ON access_permissions
 FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.role_id, 'INSERT', 'access_permissions', NEW.permission_id);
+        VALUES(1, 'INSERT', 'access_permissions', NEW.permission_id);
     END IF;
 END$$
+-- DELIMITER ;
+-- 
 
 CREATE TRIGGER trg_access_permissions_after_update
 AFTER UPDATE ON access_permissions
@@ -52,7 +55,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.role_id, 'UPDATE', 'access_permissions', NEW.permission_id);
+        VALUES(1, 'UPDATE', 'access_permissions', NEW.permission_id);
     END IF;
 END$$
 
@@ -75,7 +78,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.manager_id, 'INSERT', 'projects', NEW.project_id);
+        VALUES(1, 'INSERT', 'projects', NEW.project_id);
     END IF;
 END$$
 
@@ -85,7 +88,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.manager_id, 'UPDATE', 'projects', NEW.project_id);
+        VALUES(1, 'UPDATE', 'projects', NEW.project_id);
     END IF;
 END$$
 
@@ -108,7 +111,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'INSERT', 'timesheets', NEW.timesheet_id);
+        VALUES(1, 'INSERT', 'timesheets', NEW.timesheet_id);
     END IF;
 END$$
 
@@ -118,7 +121,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'UPDATE', 'timesheets', NEW.timesheet_id);
+        VALUES(1, 'UPDATE', 'timesheets', NEW.timesheet_id);
     END IF;
 END$$
 
@@ -141,7 +144,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'INSERT', 'users', NEW.employee_id);
+        VALUES(1, 'INSERT', 'users', NEW.employee_id);
     END IF;
 END$$
 
@@ -151,7 +154,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'UPDATE', 'users', NEW.employee_id);
+        VALUES(1, 'UPDATE', 'users', NEW.employee_id);
     END IF;
 END$$
 
@@ -175,7 +178,7 @@ BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         -- For composite keys, logging one of the keys; adjust if necessary.
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'INSERT', 'employee_projects', NEW.employee_id);
+        VALUES(1, 'INSERT', 'employee_projects', NEW.employee_id);
     END IF;
 END$$
 
@@ -185,7 +188,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.employee_id, 'UPDATE', 'employee_projects', NEW.employee_id);
+        VALUES(1, 'UPDATE', 'employee_projects', NEW.employee_id);
     END IF;
 END$$
 
@@ -208,7 +211,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.role_id, 'INSERT', 'user_roles', NEW.role_id);
+        VALUES(1, 'INSERT', 'user_roles', NEW.role_id);
     END IF;
 END$$
 
@@ -218,7 +221,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(NEW.role_id, 'UPDATE', 'user_roles', NEW.role_id);
+        VALUES(1, 'UPDATE', 'user_roles', NEW.role_id);
     END IF;
 END$$
 

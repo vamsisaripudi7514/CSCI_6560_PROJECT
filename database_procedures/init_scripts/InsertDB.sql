@@ -168,6 +168,7 @@ INSERT INTO users (employee_id, username, user_password, last_login, failed_atte
 
 -- Admin (role_id 1): Full CRUD on all tables.
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
+  (1, 'employee_projects',1,1,1,1),
   (1, 'employees', 1, 1, 1, 1),
   (1, 'projects', 1, 1, 1, 1),
   (1, 'timesheets', 1, 1, 1, 1),
@@ -178,6 +179,7 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
 -- Director (role_id 2):
 -- employees & projects: CRUD; timesheets, user_roles, access_permissions: Read only; audit_logs: CRUD.
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
+  (2, 'employee_projects',1,1,1,0),
   (2, 'employees', 1, 0, 0, 0),
   (2, 'projects', 1, 1, 1, 1),
   (2, 'timesheets', 1, 0, 0, 0),
@@ -188,6 +190,7 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
 -- Manager (role_id 3):
 -- employees & projects: Read and Update; timesheets: Read only; user_roles & access_permissions: None; audit_logs: Read.
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
+  (3, 'employee_projects',1,0,1,0),
   (3, 'employees', 1, 0, 0, 0),
   (3, 'projects', 1, 0, 1, 0),
   (3, 'timesheets', 1, 0, 0, 0),
@@ -199,6 +202,7 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
 -- Team Leader (role_id 4):
 -- All tables: Read only (except user_roles and access_permissions, which are None), audit_logs: Read.
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
+  (4, 'employee_projects',1,0,0,0),
   (4, 'employees', 1, 0, 0, 0),
   (4, 'projects', 1, 0, 0, 0),
   (4, 'timesheets', 1, 0, 0, 0),
@@ -209,6 +213,7 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
 -- Developer (role_id 5):
 -- employees, projects & timesheets: Read only; no access to user_roles, access_permissions or audit_logs.
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
+  (5, 'employee_projects',1,0,0,0),
   (5, 'employees', 1, 0, 0, 0),
   (5, 'projects', 1, 0, 0, 0),
   (5, 'timesheets', 1, 0, 0, 0),
@@ -219,6 +224,7 @@ INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, 
  --    According to the matrix: employees (CRUD), projects (R), timesheets (R),
 --    user_roles (None), access_permissions (None), audit_logs (R)
 INSERT INTO access_permissions (role_id, db_table_name, can_select, can_insert, can_update, can_delete) VALUES
+  (6, 'employee_projects',1,0,0,0),
   (6, 'employees', 1, 1, 1, 1),
   (6, 'projects', 1, 0, 0, 0),
   (6, 'timesheets', 1, 0, 0, 0),

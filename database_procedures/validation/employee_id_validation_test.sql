@@ -18,7 +18,7 @@ SELECT @is_valid;
 -- Expected output:
 -- 0
 
-CALL sp_employee_id_validation(50025, @is_valid);
+CALL sp_employee_id_validation(50028, @is_valid);
 SELECT @is_valid;
 -- Expected output:
 -- 0

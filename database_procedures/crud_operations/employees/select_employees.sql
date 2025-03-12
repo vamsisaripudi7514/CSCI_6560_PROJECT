@@ -3,9 +3,15 @@ DELIMITER $$
 CREATE PROCEDURE sp_select_employees(
     IN p_user_id INT
 )
-BEGIN
+sp_select_employees:BEGIN
     DECLARE v_access BOOLEAN DEFAULT FALSE;
-
+    DECLARE v_user_role_id INT;
+    SELECT role_id INTO v_user_role_id FROM employees WHERE employee_id = p_user_id;
+	IF v_user_role_id = 6 THEN
+		SELECT *
+          FROM employees;
+          LEAVE sp_select_employees;
+    END IF;
     CALL Check_User_Access(p_user_id, 'employees', 'SELECT', v_access);
     IF NOT v_access THEN
         SIGNAL SQLSTATE '45000'
@@ -40,7 +46,10 @@ BEGIN
           INNER JOIN employee_hierarchy eh ON e.manager_id = eh.employee_id
     )
     SELECT *
-      FROM employee_hierarchy;
+          FROM employee_hierarchy;
+
 END$$
 
 DELIMITER ;
+
+-- DROP PROCEDURE IF EXISTS sp_select_employees;

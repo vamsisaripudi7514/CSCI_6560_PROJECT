@@ -60,7 +60,7 @@ sp_get_employee_details: BEGIN
     INTO v_project_name, v_manager_id, v_project_description, v_start_date, v_end_date
     FROM projects p WHERE p.project_id = v_project_id;
 
-    IF v_user_role_id = 6 OR v_user_role_id = 2 OR v_user_role_id = 1 THEN
+    IF v_user_role_id = 6 OR v_user_role_id = 2 OR v_user_role_id = 1 OR p_user_id = p_employee_id THEN
         CALL sp_decrypt_data(v_salary, 'salary',p_decryption_key, v_decrypted_salary);
         SELECT v_employee_name as name,
               v_email as email,

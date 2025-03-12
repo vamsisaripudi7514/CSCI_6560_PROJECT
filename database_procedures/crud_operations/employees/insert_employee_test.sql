@@ -1,9 +1,9 @@
 
-CALL sp_insert_employee(10001, 50027, 'John Doe', 'hello1@gmail.com', '123456789', 5, 40001, 50000, '2025-01-01','B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613',@message);
-SELECT * FROM employees WHERE employee_id = 50026;
+CALL sp_insert_employee(10001, 50028, 'John Doe', 'hello12@gmail.com', '123456789', 5, 40001, 50000, '2025-01-01','B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613',@message);
+SELECT * FROM employees WHERE employee_id = 50028;
 select @message;
 select * from employees where employee_id = 50027;
-delete from employees where employee_id = 50027;
+delete from employees where employee_id = 50028;
 -- Expected output:
 -- inserted
 

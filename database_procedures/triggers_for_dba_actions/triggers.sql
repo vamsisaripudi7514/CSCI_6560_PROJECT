@@ -29,7 +29,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(OLD.employee_id, 'DELETE', 'employees', OLD.employee_id);
+        VALUES(1, 'DELETE', 'employees', OLD.employee_id);
     END IF;
 END$$
 
@@ -65,7 +65,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(OLD.role_id, 'DELETE', 'access_permissions', OLD.permission_id);
+        VALUES(1, 'DELETE', 'access_permissions', OLD.permission_id);
     END IF;
 END$$
 
@@ -98,7 +98,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(OLD.manager_id, 'DELETE', 'projects', OLD.project_id);
+        VALUES(1, 'DELETE', 'projects', OLD.project_id);
     END IF;
 END$$
 
@@ -131,7 +131,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(OLD.employee_id, 'DELETE', 'timesheets', OLD.timesheet_id);
+        VALUES(1, 'DELETE', 'timesheets', OLD.timesheet_id);
     END IF;
 END$$
 
@@ -164,7 +164,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(OLD.employee_id, 'DELETE', 'users', OLD.employee_id);
+        VALUES(1, 'DELETE', 'users', OLD.employee_id);
     END IF;
 END$$
 
@@ -198,7 +198,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(OLD.employee_id, 'DELETE', 'employee_projects', OLD.employee_id);
+        VALUES(1, 'DELETE', 'employee_projects', OLD.employee_id);
     END IF;
 END$$
 
@@ -231,7 +231,7 @@ FOR EACH ROW
 BEGIN
     IF CURRENT_USER() LIKE 'root@%' THEN
         INSERT INTO audit_logs(user_id, db_action, db_table_name, record_id)
-        VALUES(OLD.role_id, 'DELETE', 'user_roles', OLD.role_id);
+        VALUES(1, 'DELETE', 'user_roles', OLD.role_id);
     END IF;
 END$$
 

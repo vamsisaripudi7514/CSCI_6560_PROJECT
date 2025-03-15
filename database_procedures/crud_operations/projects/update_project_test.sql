@@ -4,10 +4,10 @@ CALL sp_update_project(
     30001,               -- p_user_id (authorized manager)
     101,                 -- p_project_id
     'Updated Project',   -- p_project_name
-    'Updated description for project 101', -- p_project_description
+    'Updated description for project1 101', -- p_project_description
     30001,               -- p_manager_id (assumed unchanged)
     '2023-05-01',        -- p_start_date
-    '2023-12-31'         -- p_end_date
+    '2023-12-30'         -- p_end_date
 );
 
 -- Verify the update:

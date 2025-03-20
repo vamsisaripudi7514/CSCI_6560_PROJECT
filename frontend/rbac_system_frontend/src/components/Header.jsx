@@ -34,7 +34,7 @@ function Header() {
                     <ul className="dropdown-menu border-0 shadow" aria-labelledby="dropdownSubMenu2">
                         <li><Link to="/profile" className="dropdown-item">Profile</Link></li>
                         <li><Link to="/update-password" className="dropdown-item">Update Password</Link></li>
-                        <li><Link to="/landing" className="dropdown-item">Logout</Link></li>
+                        <li><Link to="/" className="dropdown-item">Logout</Link></li>
                     </ul>
                 </li>
             </ul>

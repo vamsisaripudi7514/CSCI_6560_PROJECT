@@ -14,7 +14,7 @@ function AuditLogs() {
             <div className="col-md-5 offset-md-2" style={{ margin: '50px auto' }}>
                 <form action="simple-results.html">
                     <div className="input-group">
-                        <input type="search" className="form-control form-control-lg" placeholder="Enter Project ID"
+                        <input type="search" className="form-control form-control-lg" placeholder="Enter Employee ID"
                             onChange={(e) => { setEmployeeID(e.target.value) }} />
                         <div className="input-group-append">
                             <button type="submit" className="btn btn-lg btn-default">

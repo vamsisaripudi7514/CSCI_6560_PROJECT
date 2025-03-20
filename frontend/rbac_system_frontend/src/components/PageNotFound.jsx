@@ -9,7 +9,7 @@ function PageNotFound(){
             <h1 className="display-1 text-danger">404</h1>
             <h2 className="mb-3">Page Not Found</h2>
             <p className="text-muted">Oops! The page you are looking for does not exist.</p>
-            <Button variant="primary" onClick={() => navigate("/landing")}>
+            <Button variant="primary" onClick={() => navigate("/")}>
                 Go Home
             </Button>
         </Container>

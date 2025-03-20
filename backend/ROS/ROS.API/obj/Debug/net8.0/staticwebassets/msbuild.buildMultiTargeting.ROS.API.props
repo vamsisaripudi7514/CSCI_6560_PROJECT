@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\ROS.API.props" />
-</Project>

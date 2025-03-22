@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/login-style.css";
 import { useNavigate } from "react-router-dom";
 
-const Login = async () => {
+const Login =  () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Login = async () => {
                 },
                 body: JSON.stringify({username, password})
             })
-            if(!resoponse.ok){
+            if(!response.ok){
                 console.log("Error in response");
             }
             const data = await response.json();

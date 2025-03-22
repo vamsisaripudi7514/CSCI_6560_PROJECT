@@ -512,8 +512,8 @@ namespace RoleBasedAccessAPI.Data.Repository
             }
             return result;
         }
-
-        // ✅ Button Visibility
+      
+       // ✅ Button Visibility
         public async Task<object> GetButtonVisibilityAsync(int employeeId)
         {
             try
@@ -598,10 +598,12 @@ namespace RoleBasedAccessAPI.Data.Repository
                 return (false, $"Unexpected error: {ex.Message}");
             }
         }
-
-
-    }
+      
+          }
 }
+      
+
+
 
 
 

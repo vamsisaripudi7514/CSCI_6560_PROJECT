@@ -25,9 +25,9 @@ BEGIN
         
         CALL sp_audit_log(p_user_id, 'UPDATE', 'projects', p_project_id);
         
-        SELECT 'Project updated successfully.' AS Message;
+        SELECT 'Project updated successfully.';
     ELSE
-        SELECT 'Access Denied: You do not have permission to update projects.' AS Message;
+        SELECT 'Access Denied: You do not have permission to update projects.';
     END IF;
     
 END$$

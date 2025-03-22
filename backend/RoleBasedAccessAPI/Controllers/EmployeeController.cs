@@ -5,6 +5,7 @@ using RoleBasedAccessAPI.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RoleBasedAccessAPI.Controllers
 {
@@ -18,19 +19,19 @@ namespace RoleBasedAccessAPI.Controllers
         public EmployeeController(UserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
-            _encryptionKey = configuration["EncryptionKey"] ?? "MTSU2025"; // Secure encryption key from appsettings.json
+            _encryptionKey = configuration["EncryptionKey"] ?? "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1"; // Secure encryption key from appsettings.json
         }
 
 
         [HttpGet("GetAllEmployees")]
-        public async Task<IActionResult> GetAllEmployees([FromQuery] int userId)
+        public async Task<IActionResult> Get_sp_select_employees([FromQuery] int userId)
         {
             if (userId <= 0)
             {
                 return BadRequest(new { Message = "Invalid User ID." });
             }
 
-            var employees = await _userRepository.GetAllEmployeesAsync(userId);
+            var employees = await _userRepository.Get_sp_select_employees(userId);
 
             if (employees == null || (employees is List<Dictionary<string, object>> list && list.Count == 0))
             {
@@ -138,23 +139,20 @@ namespace RoleBasedAccessAPI.Controllers
         }
 
         // ✅ Update Employee API
-        [HttpPut("UpdateEmployee")]
-        public async Task<IActionResult> UpdateEmployee([FromBody] employee emp)
+        [HttpPut("updateEmployee")]
+        //[Authorize]
+        public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployee updateEmployeeDto)
         {
-            int? userId = HttpContext.Session.GetInt32("UserId");
-            if (!userId.HasValue || userId.Value <= 0)
-                return Unauthorized(new { flag = -1, message = "User not logged in." });
+            string encryptionKey = "B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613";
 
-            if (emp == null)
-                return BadRequest(new { flag = -1, message = "Invalid employee data." });
+            bool isUpdated = await _userRepository.UpdateEmployeeAsync(updateEmployeeDto, encryptionKey);
 
-            var resultMessage = await _userRepository.UpdateEmployeeAsync(emp, userId.Value, _encryptionKey);
+            if (isUpdated)
+                return Ok(new { message = "Employee updated successfully." });
 
-            if (resultMessage.Contains("successfully"))
-                return Ok(new { flag = 1, message = resultMessage });
-
-            return BadRequest(new { flag = -1, message = resultMessage });
+            return BadRequest(new { message = "Failed to update employee." });
         }
+
 
         // ✅ Update Project Mapping
         [HttpPut("UpdateProjectMapping")]

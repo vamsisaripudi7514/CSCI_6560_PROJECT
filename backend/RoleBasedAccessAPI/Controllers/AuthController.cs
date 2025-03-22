@@ -41,11 +41,11 @@ namespace RoleBasedAccessAPI.Controllers
         }
 
         [HttpPut("updatePassword")]
-        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto updatePasswordDto)
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserPassword updatePasswordDto)
         {
             var updateResult = await _userRepository.UpdatePasswordAsync(
-                updatePasswordDto.Username,
-                updatePasswordDto.CurrentPassword,
+                updatePasswordDto.UserName,
+                updatePasswordDto.OldPassword,
                 updatePasswordDto.NewPassword);
 
             if (updateResult == -1)
@@ -64,7 +64,7 @@ namespace RoleBasedAccessAPI.Controllers
 
 
 
-
+    
 
 
 

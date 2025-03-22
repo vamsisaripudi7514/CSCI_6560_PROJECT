@@ -27,6 +27,7 @@ namespace RoleBasedAccessAPI
 
             // ✅ Register Repositories
             builder.Services.AddScoped<UserRepository>();
+            builder.Services.AddScoped<AuditRepository>();
 
             // ✅ Enable Session Storage
             builder.Services.AddDistributedMemoryCache();

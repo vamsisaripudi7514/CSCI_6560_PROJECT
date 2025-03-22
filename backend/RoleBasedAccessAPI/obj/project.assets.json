@@ -3014,11 +3014,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MTSU SEM2\\ST DB\\RoleBased Access IT Company Project\\RoleBasedAccessAPI\\RoleBasedAccessAPI\\RoleBasedAccessAPI.csproj",
+      "projectUniqueName": "D:\\MTSU SEM2\\ST DB\\RoleBased Access IT Company Project\\RoleBasedAccessAPI\\CSCI 6560\\CSCI_6560_PROJECT\\backend\\RoleBasedAccessAPI\\RoleBasedAccessAPI.csproj",
       "projectName": "RoleBasedAccessAPI",
-      "projectPath": "D:\\MTSU SEM2\\ST DB\\RoleBased Access IT Company Project\\RoleBasedAccessAPI\\RoleBasedAccessAPI\\RoleBasedAccessAPI.csproj",
+      "projectPath": "D:\\MTSU SEM2\\ST DB\\RoleBased Access IT Company Project\\RoleBasedAccessAPI\\CSCI 6560\\CSCI_6560_PROJECT\\backend\\RoleBasedAccessAPI\\RoleBasedAccessAPI.csproj",
       "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "D:\\MTSU SEM2\\ST DB\\RoleBased Access IT Company Project\\RoleBasedAccessAPI\\RoleBasedAccessAPI\\obj\\",
+      "outputPath": "D:\\MTSU SEM2\\ST DB\\RoleBased Access IT Company Project\\RoleBasedAccessAPI\\CSCI 6560\\CSCI_6560_PROJECT\\backend\\RoleBasedAccessAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",

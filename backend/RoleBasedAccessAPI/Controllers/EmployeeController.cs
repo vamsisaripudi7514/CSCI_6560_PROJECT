@@ -65,11 +65,6 @@ namespace RoleBasedAccessAPI.Controllers
         #endregion
 
 
-
-
-
-
-
         // ✅ Search Employees
         [HttpGet("SearchEmployee")]
         public async Task<IActionResult> SearchEmployees([FromQuery] string searchTerm)
@@ -103,40 +98,21 @@ namespace RoleBasedAccessAPI.Controllers
             return Ok(employeeData); // Return as JSON without mapping to a model
         }
 
-        #region old GEt EMP by ID 
-        //// ✅ Get Employee Details
-        //[HttpGet("GetEmployeeById")]
-        //public async Task<IActionResult> GetEmployeeDetails([FromQuery] int employeeId)
-        //{
-        //    if (employeeId <= 0)
-        //        return BadRequest(new { flag = -1, message = "Invalid employee ID." });
-
-        //    var employee = await _userRepository.GetEmployeeDetailsAsync(employeeId);
-        //    if (employee == null)
-        //        return NotFound(new { flag = -1, message = "Employee not found." });
-
-        //    return Ok(new { flag = 1, message = "Employee details retrieved successfully.", data = employee });
-        //}
-        #endregion
 
         // ✅ Insert Employee API
         [HttpPost("InsertEmployee")]
-        public async Task<IActionResult> InsertEmployee([FromBody] employee emp)
+        public async Task<IActionResult> InsertEmployee([FromBody] InsertEmployee insertEmployeeDto)
         {
-            int? userId = HttpContext.Session.GetInt32("UserId");
-            if (!userId.HasValue || userId.Value <= 0)
-                return Unauthorized(new { flag = -1, message = "User not logged in." });
+            string encryptionKey = "B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613";
 
-            if (emp == null)
-                return BadRequest(new { flag = -1, message = "Invalid employee data." });
+            var result = await _userRepository.InsertEmployeeAsync(insertEmployeeDto, encryptionKey);
 
-            var resultMessage = await _userRepository.InsertEmployeeAsync(emp, userId.Value, _encryptionKey);
+            if (result.IsSuccess)
+                return Ok(new { message = result.Message });
 
-            if (resultMessage.Contains("successfully"))
-                return Ok(new { flag = 1, message = resultMessage });
-
-            return BadRequest(new { flag = -1, message = resultMessage });
+            return BadRequest(new { message = result.Message });
         }
+
 
         // ✅ Update Employee API
         [HttpPut("updateEmployee")]
@@ -154,19 +130,44 @@ namespace RoleBasedAccessAPI.Controllers
         }
 
 
-        // ✅ Update Project Mapping
-        [HttpPut("UpdateProjectMapping")]
-        public async Task<IActionResult> UpdateProjectMapping([FromQuery] int projectId, [FromQuery] int employeeId)
+        [HttpPost("selectTimesheet")]
+        public async Task<IActionResult> SelectTimesheet([FromBody] SelectTimesheet selectTimesheetDto)
         {
-            if (projectId <= 0 || employeeId <= 0)
-                return BadRequest(new { flag = -1, message = "Invalid project ID or employee ID." });
+            var result = await _userRepository.SelectTimesheetAsync(selectTimesheetDto);
 
-            var result = await _userRepository.UpdateProjectMappingAsync(projectId, employeeId);
-            if (result > 0)
-                return Ok(new { flag = 1, message = "Project mapping updated successfully." });
+            if (result is List<Dictionary<string, object>> timesheets && timesheets.Count > 0)
+            {
+                return Ok(timesheets);
+            }
 
-            return BadRequest(new { flag = -1, message = "Failed to update project mapping." });
+            if (result is IDictionary<string, object> dictResult && dictResult.ContainsKey("Message"))
+            {
+                return Unauthorized(new { Message = dictResult["Message"] });
+            }
+
+            return NotFound(new { Message = "No timesheets found for the employee." });
         }
+
+
+
+        // ✅ Update Project Mapping
+        [HttpPut("updateProjectMapping")]
+        public async Task<IActionResult> UpdateProjectMapping([FromBody] UpdateProjectMapping updateMappingDto)
+        {
+            var (isSuccess, message) = await _userRepository.UpdateProjectMappingAsync(updateMappingDto);
+
+            if (isSuccess)
+                return Ok(new { Message = message });
+
+            if (message.Contains("Access Denied") || message.Contains("Role Based Access Denied"))
+                return Unauthorized(new { Message = message });
+
+            if (message.Contains("Invalid"))
+                return BadRequest(new { Message = message });
+
+            return StatusCode(500, new { Message = message });
+        }
+
     }
 }
 
@@ -308,4 +309,21 @@ namespace RoleBasedAccessAPI.Controllers
 
 
 
+#endregion
+
+
+#region old GEt EMP by ID 
+//// ✅ Get Employee Details
+//[HttpGet("GetEmployeeById")]
+//public async Task<IActionResult> GetEmployeeDetails([FromQuery] int employeeId)
+//{
+//    if (employeeId <= 0)
+//        return BadRequest(new { flag = -1, message = "Invalid employee ID." });
+
+//    var employee = await _userRepository.GetEmployeeDetailsAsync(employeeId);
+//    if (employee == null)
+//        return NotFound(new { flag = -1, message = "Employee not found." });
+
+//    return Ok(new { flag = 1, message = "Employee details retrieved successfully.", data = employee });
+//}
 #endregion

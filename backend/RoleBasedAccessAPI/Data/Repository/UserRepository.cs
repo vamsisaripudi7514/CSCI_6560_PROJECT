@@ -36,7 +36,7 @@ namespace RoleBasedAccessAPI.Data.Repository
                     command.Parameters.Add(new MySqlParameter("p_user_password", MySqlDbType.VarChar) { Value = loginDto.Password });
 
                     // ✅ Convert decryption key to HEX format
-                    string decryptionKeyHex = BitConverter.ToString(Encoding.UTF8.GetBytes("MTSU2025")).Replace("-", "");
+                    string decryptionKeyHex = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1";
                     command.Parameters.Add(new MySqlParameter("p_decryption_key", MySqlDbType.VarChar) { Value = decryptionKeyHex });
 
                     // Output Parameter
@@ -67,11 +67,13 @@ namespace RoleBasedAccessAPI.Data.Repository
                 using (var command = new MySqlCommand("sp_update_user_password", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(new MySqlParameter("p_username", MySqlDbType.VarChar) { Value = username });
-                    command.Parameters.Add(new MySqlParameter("p_current_password", MySqlDbType.VarChar) { Value = currentPassword });
-                    command.Parameters.Add(new MySqlParameter("p_new_password", MySqlDbType.VarChar) { Value = newPassword });
+                    command.Parameters.Add(new MySqlParameter("user_name", MySqlDbType.VarChar) { Value = username });
+                    command.Parameters.Add(new MySqlParameter("old_password", MySqlDbType.VarChar) { Value = currentPassword });
+                    command.Parameters.Add(new MySqlParameter("new_password", MySqlDbType.VarChar) { Value = newPassword });
+                    string decryptionKeyHex = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1";
+                    command.Parameters.Add(new MySqlParameter("decryption_key", MySqlDbType.VarChar) { Value = decryptionKeyHex });
 
-                    var outputParam = new MySqlParameter("p_result", MySqlDbType.Int32)
+                    var outputParam = new MySqlParameter("response_code", MySqlDbType.Int32)
                     {
                         Direction = ParameterDirection.Output
                     };
@@ -165,7 +167,7 @@ namespace RoleBasedAccessAPI.Data.Repository
         //}
         
         #endregion
-        public async Task<object> GetAllEmployeesAsync(int userId)
+        public async Task<object> Get_sp_select_employees(int userId) //sp_select_employees
         {
             try
             {
@@ -253,32 +255,41 @@ namespace RoleBasedAccessAPI.Data.Repository
         }
 
         // ✅ Update Employee
-        public async Task<string> UpdateEmployeeAsync(employee emp, int userId, string encryptionKey)
+        public async Task<bool> UpdateEmployeeAsync(employee emp, int userId, string encryptionKey)
         {
-            string message = "Error updating employee.";
-
-            using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+            try
             {
-                await connection.OpenAsync();
-
-                using (var command = new MySqlCommand("sp_update_employee", connection))
+                using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = userId });
-                    command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = emp.EmployeeId });
+                    await connection.OpenAsync();
 
-                    var outputMessage = new MySqlParameter("p_message", MySqlDbType.VarChar, 100)
+                    using (var command = new MySqlCommand("sp_update_employee", connection))
                     {
-                        Direction = ParameterDirection.Output
-                    };
-                    command.Parameters.Add(outputMessage);
+                        command.CommandType = CommandType.StoredProcedure;
 
-                    await command.ExecuteNonQueryAsync();
-                    message = outputMessage.Value.ToString();
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = userId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = emp.EmployeeId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_name", MySqlDbType.VarChar) { Value = emp.EmployeeName });
+                        command.Parameters.Add(new MySqlParameter("p_employee_email", MySqlDbType.VarChar) { Value = emp.Email });
+                        command.Parameters.Add(new MySqlParameter("p_employee_phone", MySqlDbType.VarChar) { Value = emp.Phone });
+                        command.Parameters.Add(new MySqlParameter("p_employee_role_id", MySqlDbType.Int32) { Value = emp.RoleId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_manager_id", MySqlDbType.Int32) { Value = emp.ManagerId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_salary", MySqlDbType.VarChar) { Value = emp.EncryptedSalary }); // Assuming you pass plaintext salary here
+                        command.Parameters.Add(new MySqlParameter("p_is_working", MySqlDbType.Bit) { Value = emp.IsWorking });
+                        command.Parameters.Add(new MySqlParameter("p_encryption_key", MySqlDbType.VarChar) { Value = encryptionKey });
+
+                        await command.ExecuteNonQueryAsync();
+                    }
                 }
+                return true;
             }
-            return message;
+            catch (Exception ex)
+            {
+                // Log exception details here
+                return false;
+            }
         }
+
 
 
         #region GetEmployeeDetailsAsync, Get Employee by ID old
@@ -377,6 +388,40 @@ namespace RoleBasedAccessAPI.Data.Repository
             return null;
         }
 
+        public async Task<bool> UpdateEmployeeAsync(UpdateEmployee updateEmployeeDto, string encryptionKey)
+        {
+            try
+            {
+                using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+                {
+                    await connection.OpenAsync();
+
+                    using (var command = new MySqlCommand("sp_update_employee", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = updateEmployeeDto.SourceEmployeeId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = updateEmployeeDto.TargetEmployeeId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_name", MySqlDbType.VarChar) { Value = updateEmployeeDto.EmployeeName });
+                        command.Parameters.Add(new MySqlParameter("p_employee_email", MySqlDbType.VarChar) { Value = updateEmployeeDto.EmployeeEmail });
+                        command.Parameters.Add(new MySqlParameter("p_employee_phone", MySqlDbType.VarChar) { Value = updateEmployeeDto.EmployeePhone });
+                        command.Parameters.Add(new MySqlParameter("p_employee_role_id", MySqlDbType.Int32) { Value = updateEmployeeDto.EmployeeRoleId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_manager_id", MySqlDbType.Int32) { Value = updateEmployeeDto.EmployeeManagerId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_salary", MySqlDbType.VarChar) { Value = updateEmployeeDto.EmployeeSalary });
+                        command.Parameters.Add(new MySqlParameter("p_is_working", MySqlDbType.Bit) { Value = updateEmployeeDto.IsWorking });
+                        command.Parameters.Add(new MySqlParameter("p_encryption_key", MySqlDbType.VarChar) { Value = encryptionKey });
+
+                        await command.ExecuteNonQueryAsync();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log exception here
+                return false;
+            }
+        }
 
 
 

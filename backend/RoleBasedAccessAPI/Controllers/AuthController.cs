@@ -40,7 +40,7 @@ namespace RoleBasedAccessAPI.Controllers
             return Ok(new { flag = 1, message = "Login successful", token });
         }
 
-        [HttpPut("updatePassword")]
+        [HttpPut("UpdatePassword")]
         public async Task<IActionResult> UpdatePassword([FromBody] UpdateUserPassword updatePasswordDto)
         {
             var updateResult = await _userRepository.UpdatePasswordAsync(
@@ -59,6 +59,25 @@ namespace RoleBasedAccessAPI.Controllers
 
             return Ok(new { flag = 1, message = "Password updated successfully" });
         }
+
+        [HttpPost("ButtonVisibility")]
+        public async Task<IActionResult> GetButtonVisibility([FromBody] ButtonVisibility buttonVisibilityDto)
+        {
+            var result = await _userRepository.GetButtonVisibilityAsync(buttonVisibilityDto.EmployeeId);
+
+            if (result is List<Dictionary<string, object>> permissions && permissions.Count > 0)
+            {
+                return Ok(permissions);
+            }
+
+            if (result is IDictionary<string, object> dictResult && dictResult.ContainsKey("Message"))
+            {
+                return BadRequest(new { Message = dictResult["Message"] });
+            }
+
+            return NotFound(new { Message = "No permissions found for this employee." });
+        }
+
     }
 }
 

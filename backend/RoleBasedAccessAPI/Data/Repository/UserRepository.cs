@@ -165,7 +165,7 @@ namespace RoleBasedAccessAPI.Data.Repository
         //    }
         //    return employees;
         //}
-        
+
         #endregion
         public async Task<object> Get_sp_select_employees(int userId) //sp_select_employees
         {
@@ -348,7 +348,7 @@ namespace RoleBasedAccessAPI.Data.Repository
         #endregion
 
 
-        public async Task<object> GetEmployeeDetailsAsync(int userId, int employeeId, string decryptionKey)
+        public async Task<object> GetEmployeeDetailsAsync(GetEmployeeDetail request, string decryptionKey)
         {
             try
             {
@@ -360,43 +360,37 @@ namespace RoleBasedAccessAPI.Data.Repository
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        // ✅ Input Parameters
-                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = userId });
-                        command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = employeeId });
+                        // Input parameters from the model
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32)
+                        { Value = request.SourceEmployeeId });
+                        command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32)
+                        { Value = request.TargetEmployeeId });
 
-                        // ✅ Convert decryption key to HEX format (same approach as in LoginUserAsync)
-                        string decryptionKeyHex = BitConverter.ToString(Encoding.UTF8.GetBytes(decryptionKey)).Replace("-", "");
-                        command.Parameters.Add(new MySqlParameter("p_decryption_key", MySqlDbType.VarChar) { Value = decryptionKeyHex });
-
-                        Console.WriteLine($"Decryption Key Sent to MySQL (Hex Format): {decryptionKeyHex}"); // Debugging log
+                        // Decryption key (already in hex)
+                        command.Parameters.Add(new MySqlParameter("p_decryption_key", MySqlDbType.VarChar)
+                        { Value = decryptionKey });
 
                         using (var reader = await command.ExecuteReaderAsync())
                         {
-                            if (await reader.ReadAsync())
+                            var results = new List<Dictionary<string, object>>();
+                            while (await reader.ReadAsync())
                             {
-                                var result = new Dictionary<string, object>();
+                                var row = new Dictionary<string, object>();
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
-                                    string columnName = reader.GetName(i);
-                                    object columnValue = reader.IsDBNull(i) ? null : reader.GetValue(i);
-                                    result[columnName] = columnValue;
+                                    row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
                                 }
-                                return result;
+                                results.Add(row);
                             }
+                            return results; // returns a list of dictionaries (possibly empty)
                         }
                     }
                 }
-            }
-            catch (MySqlException ex) when (ex.Message.Contains("Incorrect string value"))
-            {
-                return new { Message = "Decryption Key format is incorrect. Ensure it is valid and properly encoded." };
             }
             catch (Exception ex)
             {
                 return new { Message = "An unexpected error occurred.", Error = ex.Message };
             }
-
-            return null;
         }
 
 
@@ -512,8 +506,8 @@ namespace RoleBasedAccessAPI.Data.Repository
             }
             return result;
         }
-      
-       // ✅ Button Visibility
+
+        // ✅ Button Visibility
         public async Task<object> GetButtonVisibilityAsync(int employeeId)
         {
             try
@@ -598,10 +592,10 @@ namespace RoleBasedAccessAPI.Data.Repository
                 return (false, $"Unexpected error: {ex.Message}");
             }
         }
-      
-          }
+
+    }
 }
-      
+
 
 
 

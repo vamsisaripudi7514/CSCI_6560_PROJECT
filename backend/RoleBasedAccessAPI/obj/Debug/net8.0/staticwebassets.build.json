@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "cw5Xkm4Kid7I6vwTRrHaaRhXwk+YCXKsCl/5/9y635M=",
+  "Hash": "9mTrBgWVSnSKUGefsl84R+cBqTHv7m0kpglVPtZWBcg=",
   "Source": "RoleBasedAccessAPI",
   "BasePath": "_content/RoleBasedAccessAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

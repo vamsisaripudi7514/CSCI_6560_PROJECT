@@ -7,12 +7,27 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Logging in with:", { username, password });
-        if (1) {
-            navigate("/dashboard");
+        try {
+            const response = await fetch("http://localhost:7011/api/Auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await response.json();
+            console.log(data);
         }
+        catch (error) {
+            console.log(error);
+        }
+
+        // if (1) {
+        //     navigate("/dashboard");
+        // }
     };
 
     return (

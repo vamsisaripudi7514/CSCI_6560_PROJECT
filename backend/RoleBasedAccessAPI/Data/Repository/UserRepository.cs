@@ -35,7 +35,7 @@ namespace RoleBasedAccessAPI.Data.Repository
                     command.Parameters.Add(new MySqlParameter("p_user_password", MySqlDbType.VarChar) { Value = loginDto.Password });
 
                     // ✅ Convert decryption key to HEX format
-                    string decryptionKeyHex = BitConverter.ToString(Encoding.UTF8.GetBytes("MTSU2025")).Replace("-", "");
+                    string decryptionKeyHex = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1";
                     command.Parameters.Add(new MySqlParameter("p_decryption_key", MySqlDbType.VarChar) { Value = decryptionKeyHex });
 
                     // Output Parameter

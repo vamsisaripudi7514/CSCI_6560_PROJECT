@@ -18,7 +18,7 @@ namespace RoleBasedAccessAPI.Controllers
         public EmployeeController(UserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
-            _encryptionKey = configuration["EncryptionKey"] ?? "MTSU2025"; // Secure encryption key from appsettings.json
+            _encryptionKey = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1"; // Secure encryption key from appsettings.json
         }
 
         // ✅ Get All Employees

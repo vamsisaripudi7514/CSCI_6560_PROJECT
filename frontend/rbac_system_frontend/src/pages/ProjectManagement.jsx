@@ -2,7 +2,20 @@ import React from "react";
 import Header from "../components/Header";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 function ProjectManagement() {
+    const location = useLocation();
+        const {
+            employee_id,
+            token,
+            employee_header_button,
+            employee_add_button,
+            employee_update_button,
+            project_header_button,
+            project_add_button,
+            project_update_button,
+            audit_header_button
+        } = location.state || {};
     const navigate = useNavigate();
     const [projectID, setProjectID] = useState("");
     const [projects, setProjects] = useState([
@@ -10,7 +23,17 @@ function ProjectManagement() {
     ]);
     return (
         <div>
-            <Header />
+            <Header
+                employee_id = {employee_id}
+                token = {token}
+                employee_header_button={ employee_header_button}
+                employee_add_button={employee_add_button}
+                employee_update_button={employee_update_button}
+                project_header_button={project_header_button}
+                project_add_button={project_add_button}
+                project_update_button={project_update_button}                
+                audit_header_button={audit_header_button}
+            />
             <div className="col-md-5 offset-md-2" style={{ margin: '50px auto' }}>
                 <form >
                     <div className="input-group">

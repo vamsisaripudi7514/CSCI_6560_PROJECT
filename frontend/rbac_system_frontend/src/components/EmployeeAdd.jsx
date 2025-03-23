@@ -2,9 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
-
+import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 function EmployeeAdd(){
+    const location = useLocation();
+    const {
+        employee_id,
+        token,
+        employee_header_button,
+        employee_add_button,
+        employee_update_button,
+        project_header_button,
+        project_add_button,
+        project_update_button,
+        audit_header_button
+    } = location.state || {};
     const navigate = useNavigate();
     const [employeeId, setEmployeeId] = useState(0);
     const [employeeName, setEmployeeName] = useState('');
@@ -14,14 +28,87 @@ function EmployeeAdd(){
     const [employeeManagerId, setEmployeeManagerId] = useState(0);
     const [employeeSalary, setEmployeeSalary] = useState('');
     const [employeehireDate, setEmployeeHireDate] = useState('');
-    function handleSubmit(event){
+    async function handleSubmit(event){
         event.preventDefault();
         console.log("Employee Data:", {employeeId, employeeName, employeeEmail, employeePhone, employeeRoleId, employeeManagerId, employeeSalary, employeehireDate});
+        try{
+            sessionStorage.setItem("target_employee_id", employeeId);
+            const response = await fetch("http://localhost:7011/api/Employee/InsertEmployee",{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        sourceEmployeeId : employee_id,
+                        targetEmployeeId : employeeId,
+                        employeeName : employeeName,
+                        employeeEmail : employeeEmail,
+                        employeePhone : employeePhone,
+                        employeeRoleId : employeeRoleId,
+                        employeeManagerId : employeeManagerId,
+                        employeeSalary : employeeSalary,
+                        hireDate : employeehireDate
+                    }
+                )
+            });
+            const data = await response.json();
+            console.log("Data:", data);
+            if(!response.ok){
+                console.error("Error in adding employee:", data.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: data.message,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                return;
+            }
+            Swal.fire({
+                icon: 'success',
+                title: data.message,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+            navigate('/employee-view',{
+                state:{
+                    employee_id: employee_id,
+                    token: token,
+                    employee_header_button: employee_header_button,
+                    employee_add_button: employee_add_button,
+                    employee_update_button: employee_update_button,
+                    project_header_button: project_header_button,
+                    project_add_button: project_add_button,
+                    project_update_button: project_update_button,
+                    audit_header_button: audit_header_button
+                }
+            });
+
+        }
+        catch(error){
+            console.error("Error in adding employee:", error);
+        }
     }
 
     return (
         <div>
-            <Header/>
+            <Header
+                employee_id = {employee_id}
+                token = {token}
+                employee_header_button={ employee_header_button}
+                employee_add_button={employee_add_button}
+                employee_update_button={employee_update_button}
+                project_header_button={project_header_button}
+                project_add_button={project_add_button}
+                project_update_button={project_update_button}                
+                audit_header_button={audit_header_button}
+            />
             <div className="card card-primary" style={{ alignItems: "center" }}>
                 <form style={{ borderRadius: "5px", margin: "50px auto", border: "1px solid #007bff", width: "50%" }} onSubmit={ handleSubmit }>
                     <div className="card-header" style={{ backgroundColor: "#007bff", color: "white" }}>
@@ -82,12 +169,12 @@ function EmployeeAdd(){
                             <div className="col-sm-6">
                             <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Employee Salary</label>
-                                    <input type="number" className="form-control" id="employee-name" placeholder="Enter Salary" value={employeeSalary} onChange={(e) => { setEmployeeSalary(e.target.value) }} />
+                                    <input type="text" className="form-control" id="employee-name" placeholder="Enter Salary" value={employeeSalary} onChange={(e) => { setEmployeeSalary(e.target.value) }} />
                                 </div>
                             </div>
                             <div className="col-sm-6">
                             <label htmlFor="exampleInputEmail1">Hire Date</label>
-                                    <input type="date" className="form-control" id="employee-name" placeholder="Enter Salary" value={employeeSalary} onChange={(e) => { setEmployeeSalary(e.target.value) }} />
+                                    <input type="date" className="form-control" id="employee-name" placeholder="Enter Salary" value={employeehireDate} onChange={(e) => { setEmployeeHireDate(e.target.value) }} />
 
                             </div>
                         </div>
@@ -95,7 +182,22 @@ function EmployeeAdd(){
                     
                     <div className="card-footer" >
                     <div className="d-flex justify-content-center align-items-center">
-                    <button type="submit" className="btn btn-primary" onClick={()=>{navigate('/employee-view')}}>Submit</button>
+                        
+                    <button type="submit" className="btn btn-primary" >
+                        <Link to="/employee-view" className="btn btn-primary"
+                            state={{
+                                employee_id,
+                                token,
+                                employee_header_button,
+                                employee_add_button,
+                                employee_update_button,
+                                project_header_button,
+                                project_add_button,
+                                project_update_button,
+                                audit_header_button
+                              }}
+                        >Submit</Link>
+                        </button>
                         </div>
                         
                     </div>

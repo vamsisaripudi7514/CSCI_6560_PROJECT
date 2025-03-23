@@ -2,8 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-
+import { useLocation } from "react-router-dom";
 function ProjectView() {
+    const location = useLocation();
+        const {
+            employee_id,
+            token,
+            employee_header_button,
+            employee_add_button,
+            employee_update_button,
+            project_header_button,
+            project_add_button,
+            project_update_button,
+            audit_header_button
+        } = location.state || {};
     const navigate = useNavigate();
     const [project, setProject] = useState({
         projectId: 101,
@@ -15,7 +27,17 @@ function ProjectView() {
     });
     return (
         <div>
-            <Header />
+           <Header
+                employee_id = {employee_id}
+                token = {token}
+                employee_header_button={ employee_header_button}
+                employee_add_button={employee_add_button}
+                employee_update_button={employee_update_button}
+                project_header_button={project_header_button}
+                project_add_button={project_add_button}
+                project_update_button={project_update_button}                
+                audit_header_button={audit_header_button}
+            />
             <div className="invoice p-5 mb-2" style={{ border: '1px solid black', width: '90%', margin: '10px auto' }}>
                 <div className="col-12">
                     <h4>

@@ -2,67 +2,138 @@ import React from "react";
 import { useState } from "react";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
-
+import { useLocation} from "react-router-dom";
+import { useEffect } from "react";
 function EmployeeView() {
+    const location = useLocation();
+    const {
+        employee_id,
+        token,
+        employee_header_button,
+        employee_add_button,
+        employee_update_button,
+        project_header_button,
+        project_add_button,
+        project_update_button,
+        audit_header_button
+    } = location.state || {};
     const navigate = useNavigate();
-    const [employee, setEmployee] = useState({
-        id: 1,
-        name: 'John Doe',
-        email: 'example@gmail.com',
-        phone: '1234567890',
-        role: 'Developer',
-        salary: 10000,
-        hireDate: '2021-01-01',
-        isWorking: true,
-        projectName: 'Project 1',
-        managerID: 2,
-        projectDescription: 'Project Description',
-        startDate: '2021-01-01',
-        endDate: '2021-12-31',
-    });
+    const [employee_data, setEmployeeData] = useState([{}]);
     const [timesheets, setTimeSheet] = useState([
-        { id: 1, date: '2021-01-01', hours: 8 },
-        { id: 2, date: '2021-01-02', hours: 8 },
-        { id: 3, date: '2021-01-03', hours: 8 },
-        { id: 4, date: '2021-01-04', hours: 8 },
-        { id: 5, date: '2021-01-05', hours: 8 },
+        {}
     ]);
+
+    useEffect(() => {
+        const source_employee_id = sessionStorage.getItem("employee_id");
+        const source_token = sessionStorage.getItem("token");
+        const target_employee_id = sessionStorage.getItem("target_employee_id");
+        console.log("Target Employee ID:", target_employee_id);
+        const getEmployee = async () => {
+            try {
+                const response = await fetch("http://localhost:7011/api/Employee/GetEmployeeDetails", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sourceEmployeeId: source_employee_id, targetEmployeeId: target_employee_id })
+                });
+                const data = await response.json();
+                console.log("Data:", data);
+                setEmployeeData(data);
+            }
+            catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+        const getTimesheet = async()=>{
+            try{
+                const response = await fetch("http://localhost:7011/api/Employee/selectTimesheet", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sourceEmployeeId: source_employee_id , targetEmployeeId: target_employee_id })
+                })
+                const data = await response.json();
+                console.log("Timesheet Data:", data);
+                setTimeSheet(data);
+                console.log(typeof(data[0].log_date));
+            }
+            catch(error){
+                console.error("Error fetching timesheet data:", error);
+            }
+        }
+        getEmployee();
+        getTimesheet();
+    }, []);
+    function processString(string) {
+        let ans ="";
+        if(string == null){
+            return "N/A";
+        }
+        for (let i = 0; i < string.length; i++) {
+            if (string[i] == 'T') {
+                break;
+            }
+            ans += string[i];
+        }
+        return ans;
+    }   
     return (
         <div>
-            <Header />
+            <Header
+                employee_id={employee_id}
+                token={token}
+                employee_header_button={employee_header_button}
+                employee_add_button={employee_add_button}
+                employee_update_button={employee_update_button}
+                project_header_button={project_header_button}
+                project_add_button={project_add_button}
+                project_update_button={project_update_button}
+                audit_header_button={audit_header_button}
+            />
             <div className="invoice p-5 mb-2" style={{ border: '1px solid black', width: '90%', margin: '10px auto' }}>
                 <div className="col-12">
                     <h4>
                         <ion-icon name="person-outline"></ion-icon> Employee Info
                         <small className="float-right">
                             {
-                                 1?
-                                (<button type="button" className="btn btn-block btn-primary" onClick={()=>{navigate('/employee-edit')}}>Edit</button>)
-                                :(<></>)
+                                1 ?
+                                    (<button type="button" className="btn btn-block btn-primary" 
+                                        onClick={() => { navigate('/employee-edit',{
+                                            state:{
+                                                employee_id: employee_id,
+                                                token: token,
+                                                employee_header_button: employee_header_button,
+                                                employee_add_button: employee_add_button,
+                                                employee_update_button: employee_update_button,
+                                                project_header_button: project_header_button,
+                                                project_add_button: project_add_button,
+                                                project_update_button: project_update_button,
+                                                audit_header_button: audit_header_button
+                                            }
+                                        }) }}>Edit</button>)
+                                    : (<></>)
                             }
                         </small>
                     </h4>
-                    
+
                 </div><br />
                 <div className="row invoice-info">
                     <div className="col-sm-4 invoice-col">
                         <strong>Name</strong>
                         <address>
-                            {employee.name}<br />
+                            {employee_data[0].name}<br />
 
                         </address>
                     </div>
                     <div className="col-sm-4 invoice-col">
                         <strong>Email</strong>
                         <address>
-                            {employee.email}<br />
+                            {employee_data[0].email}<br />
 
                         </address>
                     </div>
                     <div className="col-sm-4 invoice-col">
                         <strong>Phone</strong>
                         <address>
-                            {employee.phone}<br />
+                            {employee_data[0].phone}<br />
                         </address>
                     </div>
                 </div>
@@ -70,24 +141,77 @@ function EmployeeView() {
                     <div className="col-sm-4 invoice-col">
                         <strong>Role</strong>
                         <address>
-                            {employee.role}<br />
+                            {employee_data[0].role}<br />
                         </address>
                     </div>
                     <div className="col-sm-4 invoice-col">
                         <strong>Salary</strong>
                         <address>
-                            {employee.salary}<br />
+                            {employee_data[0].salary}<br />
                         </address>
                     </div>
                     <div className="col-sm-4 invoice-col">
                         <strong>Hire Date</strong>
                         <address>
-                            {employee.hireDate}<br />
+                            {employee_data[0].hire_date
+                                ? processString(employee_data[0].hire_date)
+                                : "N/A"
+                            }<br />
                         </address>
                     </div>
                 </div>
                 <hr />
-                <div className="col-12">
+                {
+                    Array.isArray(employee_data)  && employee_data.map((employee, index) => (
+                        <>
+                            <div className="col-12">
+                                <h4>
+                                    <ion-icon name="briefcase-outline"></ion-icon> Project Info
+                                    <small className="float-right">
+                                        {
+                                            1 ?
+                                                (<button type="button" className="btn btn-block btn-primary" onClick={() => { navigate('/project-mapping-edit') }}>Edit</button>)
+                                                : (<></>)
+                                        }
+                                    </small>
+                                </h4>
+                            </div><br />
+                            <div className="row invoice-info">
+                                <div className="col-sm-4 invoice-col">
+                                    <strong>Project Name</strong>
+                                    <address>
+                                        {employee?.project_name || "Not Assigned"}<br />
+
+                                    </address>
+                                </div>
+                                <div className="col-sm-4 invoice-col">
+                                    <strong>Manager ID</strong>
+                                    <address>
+                                        {employee.manager_id || "Not Assigned"}<br />
+
+                                    </address>
+                                </div>
+                                <div className="col-sm-4 invoice-col">
+                                    <strong>Start Date</strong>
+                                    <address>
+                                        {processString(employee.start_date) || "N/A"}<br />
+                                    </address>
+                                </div>
+                            </div>
+                            <div className="row invoice-info">
+                                <div className="col-sm-4 invoice-col">
+                                    <strong>Project Description</strong>
+                                    <address>
+                                        {employee.project_description || "N/A"}<br />
+
+                                    </address>
+                                </div>
+                            </div>
+                            <hr />
+                        </>
+                    ))
+                }
+                {/* <div className="col-12">
                     <h4>
                         <ion-icon name="briefcase-outline"></ion-icon> Project Info
                         <small className="float-right">
@@ -129,7 +253,7 @@ function EmployeeView() {
 
                         </address>
                     </div>
-                </div>
+                </div> */}
                 {/* <div className="row invoice-info">
 
                     <div className="col-sm-2 invoice-col">
@@ -139,15 +263,15 @@ function EmployeeView() {
                         </address>
                     </div>
                 </div> */}
-                <hr />
+                
                 <div className="col-12">
                     <h4>
-                    <ion-icon name="hourglass-outline"></ion-icon> TimeSheet
+                        <ion-icon name="hourglass-outline"></ion-icon> TimeSheet
                     </h4>
                 </div><br />
                 <div className="row" style={{ width: "40%", margin: "0 auto" }}>
                     <div className="col-12 table-responsive">
-                        <table className="table table-striped" style={{textAlign: "center", border: "1px solid black"}}>
+                        <table className="table table-striped" style={{ textAlign: "center", border: "1px solid black" }}>
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -155,11 +279,11 @@ function EmployeeView() {
                                 </tr>
                             </thead>
                             <tbody style={{ textAlign: "center" }}>
-                                {
+                                { Array.isArray(timesheets) && timesheets[0].timesheet_id!=null &&
                                     timesheets.map((timesheet, index) => (
-                                        <tr key={timesheet.id}>
-                                            <td>{timesheet.date}</td>
-                                            <td>{timesheet.hours}</td>
+                                        <tr key={timesheet.timesheet_id}>
+                                            <td>{processString(timesheet.log_date)}</td>
+                                            <td>{timesheet.hours_logged}</td>
                                         </tr>
                                     ))
                                 }

@@ -1,8 +1,20 @@
 import React from "react";
 import {Container,Button} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
-
+import { useLocation } from "react-router-dom";
 function PageNotFound(){
+    const location = useLocation();
+        const {
+            employee_id,
+            token,
+            employee_header_button,
+            employee_add_button,
+            employee_update_button,
+            project_header_button,
+            project_add_button,
+            project_update_button,
+            audit_header_button
+        } = location.state || {};
     const navigate = useNavigate();
     return(
         <Container className="text-center d-flex flex-column align-items-center justify-content-center vh-100">

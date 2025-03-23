@@ -2,7 +2,20 @@ import React from "react";
 import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 function ProjectMappingEdit() {
+    const location = useLocation();
+        const {
+            employee_id,
+            token,
+            employee_header_button,
+            employee_add_button,
+            employee_update_button,
+            project_header_button,
+            project_add_button,
+            project_update_button,
+            audit_header_button
+        } = location.state || {};
     const navigate = useNavigate();
     const [project, setProject] = useState(101);
     const [projectName, setProjectName] = useState("Project 1");
@@ -19,7 +32,17 @@ function ProjectMappingEdit() {
     }
     return (
         <div>
-            <Header />
+            <Header
+                employee_id = {employee_id}
+                token = {token}
+                employee_header_button={ employee_header_button}
+                employee_add_button={employee_add_button}
+                employee_update_button={employee_update_button}
+                project_header_button={project_header_button}
+                project_add_button={project_add_button}
+                project_update_button={project_update_button}                
+                audit_header_button={audit_header_button}
+            />
             <div className="card card-primary" style={{ alignItems: "center" }}>
                 <form style={{ borderRadius: "5px", margin: "50px auto", border: "1px solid #007bff", width: "30%" }} onSubmit={handleSubmit}>
                     <div className="card-header" style={{ backgroundColor: "#007bff", color: "white", alignContent: "center", alignItems: "center" }}>

@@ -63,6 +63,15 @@ namespace RoleBasedAccessAPI
             // ✅ Add Swagger for API Documentation
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp", policy =>
+                {
+                    policy.AllowAnyOrigin() // Allows requests from any origin
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -74,7 +83,7 @@ namespace RoleBasedAccessAPI
             }
 
             // app.UseHttpsRedirection();
-
+            app.UseCors("AllowReactApp");
             // ✅ Enable Middleware Order for Sessions, Authentication, and Authorization
             app.UseSession();  // Enable session tracking before authentication
             app.UseAuthentication();

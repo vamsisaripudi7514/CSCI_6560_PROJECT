@@ -37,7 +37,7 @@ namespace RoleBasedAccessAPI.Controllers
 
             // ✅ Generate JWT Token with UserID & Password
             var token = JwtHelper.GenerateJwtToken(loginDto.Username, userId, loginDto.Password);
-            return Ok(new { flag = 1, message = "Login successful", token });
+            return Ok(new { flag = 1, message = "Login successful", token, employee_id = userId });
         }
 
         [HttpPut("UpdatePassword")]

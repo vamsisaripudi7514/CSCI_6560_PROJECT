@@ -9,7 +9,7 @@ sp_select_employees:BEGIN
     SELECT role_id INTO v_user_role_id FROM employees WHERE employee_id = p_user_id;
 	IF v_user_role_id = 6 THEN
 		SELECT *
-          FROM employees;
+          FROM employees where manager_id IS NOT NULL;
           LEAVE sp_select_employees;
     END IF;
     CALL Check_User_Access(p_user_id, 'employees', 'SELECT', v_access);

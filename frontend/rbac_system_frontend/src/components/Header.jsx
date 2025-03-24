@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/header-style.css";
 import "admin-lte/dist/css/adminlte.min.css";
 import { useState, useEffect,useLayoutEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 function Header({ employee_id, token, employee_header_button, employee_add_button, employee_update_button, project_header_button, project_add_button, project_update_button, audit_header_button }) {
 
@@ -16,6 +16,23 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
     // console.log("Audit Header Button:", audit_header_button);
     // console.log("Employee ID:", employee_id);
     // console.log("Token:", token);
+    const navigate = useNavigate();
+    // function handleProfileView(){
+    //     sessionStorage.setItem("target_employee_id", employee_id);
+    //     navigate("/employee-view",{
+    //         state: {
+    //             employee_id: employee_id,
+    //             token: token,
+    //             employee_header_button: employee_header_button,
+    //             employee_add_button: employee_add_button,
+    //             employee_update_button: employee_update_button,
+    //             project_header_button: project_header_button,
+    //             project_add_button: project_add_button,
+    //             project_update_button: project_update_button,
+    //             audit_header_button: audit_header_button
+    //         }
+    //     });
+    // }
     return (
         <nav className="main-header navbar navbar-expand navbar-white navbar-light" style={{ marginLeft: "0px", paddingLeft: "7px", backgroundColor: "#74b5e3" }}>
             <ul className="navbar-nav">
@@ -111,7 +128,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
 
                     {/* Dropdown Menu */}
                     <ul className="dropdown-menu border-0 shadow" aria-labelledby="dropdownSubMenu2">
-                        <li><Link to="/profile" className="dropdown-item"
+                        <li><Link to="/profile-view" className="dropdown-item"
                         state={{
                             employee_id,
                             token,
@@ -124,9 +141,11 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                             audit_header_button
                           }}
                         >Profile</Link></li>
+                        {/* <button onClick={handleProfileView}>Profile</button> */}
                         <li><Link to="/update-password" className="dropdown-item"
                         state={{
                             employee_id,
+                            target_employee_id: employee_id,
                             token,
                             employee_header_button,
                             employee_add_button,

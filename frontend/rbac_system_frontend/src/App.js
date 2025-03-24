@@ -14,6 +14,7 @@ import EmployeeAdd from './components/EmployeeAdd';
 import ProjectView from './pages/ProjectView';
 import ProjectEdit from './components/ProjectEdit';
 import ProjectAdd from './components/ProjectAdd';
+import EmployeeProfileView from './pages/EmployeeProfileView';
 function App() {
   return (
     <div>
@@ -32,6 +33,7 @@ function App() {
           <Route path='/project-view' element={<ProjectView/>}/>
           <Route path='/project-edit' element={<ProjectEdit/>}/>
           <Route path='/project-add' element={<ProjectAdd/>}/>
+          <Route path='profile-view' element={<EmployeeProfileView/>}/>
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

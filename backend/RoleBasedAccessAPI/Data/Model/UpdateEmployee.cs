@@ -8,7 +8,7 @@
         public string EmployeeEmail { get; set; }
         public string EmployeePhone { get; set; }
         public int EmployeeRoleId { get; set; }
-        public int EmployeeManagerId { get; set; }
+        public int? EmployeeManagerId { get; set; }
         public string EmployeeSalary { get; set; }
         public bool IsWorking { get; set; }
     }

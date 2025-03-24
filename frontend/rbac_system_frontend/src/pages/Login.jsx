@@ -127,7 +127,7 @@ const Login =  () => {
         // console.log("Audit Header Button:", sessionStorage.getItem("audit-header-button"));
         // setTimeout(3000);
         const buttons = {
-            employee_header_button: data[3].can_update,
+            employee_header_button: data[3].can_select,
             employee_add_button: data[3].can_insert,
             employee_update_button: data[3].can_update,
             project_header_button: data[4].can_update,

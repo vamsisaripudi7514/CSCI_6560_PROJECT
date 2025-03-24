@@ -14,7 +14,7 @@ function ProjectEdit() {
         project_header_button,
         project_add_button,
         project_update_button,
-        audit_header_button
+        audit_header_button,
     } = location.state || {};
     const navigate = useNavigate();
     const [projectName, setProjectName] = useState("Project 1");
@@ -22,25 +22,25 @@ function ProjectEdit() {
     const [projectManagerId, setProjectManagerId] = useState(0);
     const [projectStartDate, setProjectStartDate] = useState("21-09-2021");
     const [projectEndDate, setProjectEndDate] = useState("31-12-2021");
-    function handleSubmit(event){
+    function handleSubmit(event) {
         event.preventDefault();
-        console.log("Project Data:", {projectName, projectDescription, projectManagerId, projectStartDate, projectEndDate});
+        console.log("Project Data:", { projectName, projectDescription, projectManagerId, projectStartDate, projectEndDate });
     }
     return (
         <div>
             <Header
-                employee_id = {employee_id}
-                token = {token}
-                employee_header_button={ employee_header_button}
+                employee_id={employee_id}
+                token={token}
+                employee_header_button={employee_header_button}
                 employee_add_button={employee_add_button}
                 employee_update_button={employee_update_button}
                 project_header_button={project_header_button}
                 project_add_button={project_add_button}
-                project_update_button={project_update_button}                
+                project_update_button={project_update_button}
                 audit_header_button={audit_header_button}
             />
             <div className="card card-primary" style={{ alignItems: "center" }}>
-                <form style={{ borderRadius: "5px", margin: "50px auto", border: "1px solid #007bff", width: "50%" }} onSubmit={ handleSubmit }>
+                <form style={{ borderRadius: "5px", margin: "50px auto", border: "1px solid #007bff", width: "50%" }} onSubmit={handleSubmit}>
                     <div className="card-header" style={{ backgroundColor: "#007bff", color: "white" }}>
                         <h2 className="card-title">EDIT PROJECT DATA</h2>
                     </div>
@@ -76,7 +76,7 @@ function ProjectEdit() {
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Start Date</label>
-                                    <input type="date" className="form-control" id="employee-name"  value={projectStartDate} onChange={(e) => { setProjectStartDate(e.target.value) }} />
+                                    <input type="date" className="form-control" id="employee-name" value={projectStartDate} onChange={(e) => { setProjectStartDate(e.target.value) }} />
                                 </div>
 
                             </div>
@@ -85,17 +85,17 @@ function ProjectEdit() {
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">End Date</label>
-                                    <input type="date" className="form-control" id="employee-name"  value={projectEndDate} onChange={(e) => { setProjectEndDate(e.target.value) }} />
+                                    <input type="date" className="form-control" id="employee-name" value={projectEndDate} onChange={(e) => { setProjectEndDate(e.target.value) }} />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="card-footer" >
-                    <div className="d-flex justify-content-center align-items-center">
-                    <button type="submit" className="btn btn-primary" onClick={()=>{navigate('/project-view')}}>Submit</button>
+                        <div className="d-flex justify-content-center align-items-center">
+                            <button type="submit" className="btn btn-primary" onClick={() => { navigate('/project-view') }}>Submit</button>
                         </div>
-                        
+
                     </div>
                 </form>
             </div>

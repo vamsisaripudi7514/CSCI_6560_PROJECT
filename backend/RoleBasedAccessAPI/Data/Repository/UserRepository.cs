@@ -379,6 +379,7 @@ namespace RoleBasedAccessAPI.Data.Repository
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
                                     row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                    Console.WriteLine(reader.GetName(i));
                                 }
                                 results.Add(row);
                             }
@@ -425,6 +426,7 @@ namespace RoleBasedAccessAPI.Data.Repository
             catch (Exception ex)
             {
                 // Log exception here
+                Console.WriteLine("the error is " + ex);
                 return false;
             }
         }
@@ -487,25 +489,26 @@ namespace RoleBasedAccessAPI.Data.Repository
 
 
         // ✅ Update Project Mapping
-        public async Task<int> UpdateProjectMappingAsync(int projectId, int employeeId)
-        {
-            int result = -1;
+        //public async Task<int> UpdateProjectMappingAsync(int projectId, int employeeId, int oldProjectId)
+        //{
+        //    int result = -1;
 
-            using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
-            {
-                await connection.OpenAsync();
+        //    using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+        //    {
+        //        await connection.OpenAsync();
 
-                using (var command = new MySqlCommand("sp_update_project_mapping", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32) { Value = projectId });
-                    command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = employeeId });
+        //        using (var command = new MySqlCommand("sp_update_project_mapping", connection))
+        //        {
+        //            command.CommandType = CommandType.StoredProcedure;
+        //            command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32) { Value = projectId });
+        //            command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = employeeId });
+        //            command.Parameters.Add(new MySqlParameter("p_old_project_id", MySqlDbType.Int32) { Value = oldProjectId});
 
-                    result = await command.ExecuteNonQueryAsync();
-                }
-            }
-            return result;
-        }
+        //            result = await command.ExecuteNonQueryAsync();
+        //        }
+        //    }
+        //    return result;
+        //}
 
         // ✅ Button Visibility
         public async Task<object> GetButtonVisibilityAsync(int employeeId)
@@ -569,7 +572,10 @@ namespace RoleBasedAccessAPI.Data.Repository
                         { Value = updateMappingDto.TargetEmployeeId });
 
                         command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32)
-                        { Value = updateMappingDto.ProjetId });
+                        { Value = updateMappingDto.ProjectId });
+
+                        command.Parameters.Add(new MySqlParameter("p_old_project_id", MySqlDbType.Int32)
+                        { Value = updateMappingDto.OldProjectId });
 
                         using (var reader = await command.ExecuteReaderAsync())
                         {

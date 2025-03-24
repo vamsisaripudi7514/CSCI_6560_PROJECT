@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation} from "react-router-dom";
 import { useEffect } from "react";
-function EmployeeView() {
+function EmployeeProfileView() {
     const location = useLocation();
     const {
         employee_id,
@@ -26,14 +26,14 @@ function EmployeeView() {
     useEffect(() => {
         const source_employee_id = sessionStorage.getItem("employee_id");
         const source_token = sessionStorage.getItem("token");
-        const target_employee_id = sessionStorage.getItem("target_employee_id");
-        console.log("Target Employee ID:", target_employee_id);
+        // const target_employee_id = sessionStorage.getItem("target_employee_id");
+        // console.log("Target Employee ID:", target_employee_id);
         const getEmployee = async () => {
             try {
                 const response = await fetch("http://localhost:7011/api/Employee/GetEmployeeDetails", {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sourceEmployeeId: source_employee_id, targetEmployeeId: target_employee_id })
+                    body: JSON.stringify({ sourceEmployeeId: source_employee_id, targetEmployeeId: source_employee_id })
                 });
                 const data = await response.json();
                 console.log("Data:", data);
@@ -49,7 +49,7 @@ function EmployeeView() {
                 const response = await fetch("http://localhost:7011/api/Employee/selectTimesheet", {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sourceEmployeeId: source_employee_id , targetEmployeeId: target_employee_id })
+                    body: JSON.stringify({ sourceEmployeeId: source_employee_id , targetEmployeeId: source_employee_id })
                 })
                 const data = await response.json();
                 console.log("Timesheet Data:", data);
@@ -93,7 +93,7 @@ function EmployeeView() {
                 <div className="col-12">
                     <h4>
                         <ion-icon name="person-outline"></ion-icon> Employee Info
-                        <small className="float-right">
+                        {/* <small className="float-right">
                             {
                                 employee_update_button  &&
                                     <Link to="/employee-edit" className="btn btn-primary"
@@ -119,7 +119,7 @@ function EmployeeView() {
                                     
                                     
                             }
-                        </small>
+                        </small> */}
                     </h4>
 
                 </div><br />
@@ -175,7 +175,7 @@ function EmployeeView() {
                             <div className="col-12">
                                 <h4>
                                     <ion-icon name="briefcase-outline"></ion-icon> Project Info
-                                    <small className="float-right">
+                                    {/* <small className="float-right">
                                         {
                                             project_update_button &&
                                              <Link to ="/project-mapping-edit" className="btn btn-primary"
@@ -196,7 +196,7 @@ function EmployeeView() {
                                                 // <button type="button" className="btn btn-block btn-primary" onClick={() => { navigate('/project-mapping-edit') }}>Edit</button>
                                                 
                                         }
-                                    </small>
+                                    </small> */}
                                 </h4>
                             </div><br />
                             <div className="row invoice-info">
@@ -323,4 +323,4 @@ function EmployeeView() {
     );
 }
 
-export default EmployeeView;
+export default EmployeeProfileView;

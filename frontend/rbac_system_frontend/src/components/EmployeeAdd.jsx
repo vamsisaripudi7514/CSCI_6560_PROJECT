@@ -184,7 +184,7 @@ function EmployeeAdd(){
                     <div className="d-flex justify-content-center align-items-center">
                         
                     <button type="submit" className="btn btn-primary" >
-                        <Link to="/employee-view" className="btn btn-primary"
+                        {/* <Link to="/employee-view" className="btn btn-primary"
                             state={{
                                 employee_id,
                                 token,
@@ -196,7 +196,8 @@ function EmployeeAdd(){
                                 project_update_button,
                                 audit_header_button
                               }}
-                        >Submit</Link>
+                        >Submit</Link> */}
+                        Submit
                         </button>
                         </div>
                         

@@ -20,13 +20,13 @@ sp_update_employee:BEGIN
     DECLARE v_encrypted_salary BLOB;
     SELECT role_id INTO v_user_role_id FROM employees WHERE employee_id = p_user_id;
     CALL sp_employee_id_validation(p_employee_id, v_is_valid_employee_id);
-    IF v_is_valid_employee_id = FALSE THEN
+    IF v_is_valid_employee_id = FALSE AND p_employee_id != 1 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Invalid employee_id';
         LEAVE sp_update_employee;
     END IF;
     CALL Check_User_Access(p_user_id, 'employees', 'UPDATE', v_is_role_access);
-    IF NOT v_is_role_access THEN
+    IF NOT v_is_role_access AND v_user_role_id!=6 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Access Denied: You do not have permission to update employees';
         LEAVE sp_update_employee;

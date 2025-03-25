@@ -159,5 +159,48 @@ namespace RoleBasedAccessAPI.Data.Repository
             }
         }
 
+        public async Task<(bool IsSuccess, string Message)> InsertProjectAsync(AddProject data, string encryptionKey)
+        {
+            try
+            {
+                using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+                {
+                    await connection.OpenAsync();
+
+                    using (var command = new MySqlCommand("sp_insert_project", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = data.employee_id });
+                        command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32) { Value = data.project_id });
+                        command.Parameters.Add(new MySqlParameter("p_project_name", MySqlDbType.VarChar) { Value = data.project_name });
+                        command.Parameters.Add(new MySqlParameter("p_project_description", MySqlDbType.Text) { Value = data.project_description });
+                        command.Parameters.Add(new MySqlParameter("p_manager_id", MySqlDbType.Int32) { Value = data.manager_id });
+                        command.Parameters.Add(new MySqlParameter("p_start_date", MySqlDbType.Date) { Value = data.start_date.Date });
+                        command.Parameters.Add(new MySqlParameter("p_end_date", MySqlDbType.Date) { Value = data.end_date.Date });
+
+
+                        var messageParam = new MySqlParameter("p_message", MySqlDbType.VarChar, 100)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(messageParam);
+
+                        await command.ExecuteNonQueryAsync();
+
+                        string message = messageParam.Value?.ToString();
+                        return (true, message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log exception here clearly for debugging
+                return (false, ex.Message);
+            }
+        }
     }
+
 }
+
+

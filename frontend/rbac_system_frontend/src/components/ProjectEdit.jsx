@@ -15,17 +15,67 @@ function ProjectEdit() {
         project_add_button,
         project_update_button,
         audit_header_button,
+        project_id,
+        project_name,
+        manager_id,
+        start_date,
+        end_date,
+        project_description
     } = location.state || {};
     const navigate = useNavigate();
-    const [projectName, setProjectName] = useState("Project 1");
-    const [projectDescription, setProjectDescription] = useState("Project 1 Description");
-    const [projectManagerId, setProjectManagerId] = useState(0);
-    const [projectStartDate, setProjectStartDate] = useState("21-09-2021");
-    const [projectEndDate, setProjectEndDate] = useState("31-12-2021");
-    function handleSubmit(event) {
+    const [projectName, setProjectName] = useState(project_name);
+    const [projectDescription, setProjectDescription] = useState(project_description);
+    const [projectManagerId, setProjectManagerId] = useState(manager_id);
+    const [projectStartDate, setProjectStartDate] = useState(() =>
+        start_date ? new Date(start_date).toISOString().split("T")[0] : ""
+    );
+    const [projectEndDate, setProjectEndDate] = useState(() =>
+        end_date ? new Date(end_date).toISOString().split("T")[0] : ""
+    );
+    async function handleSubmit(event) {
         event.preventDefault();
-        console.log("Project Data:", { projectName, projectDescription, projectManagerId, projectStartDate, projectEndDate });
+        // console.log("Project Data:", { projectName, projectDescription, projectManagerId, projectStartDate, projectEndDate });
+        try {
+            const response = await fetch('http://localhost:7011/api/Project/updateProject', {
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sourceEmployeeId: employee_id,
+                    projectId: project_id,
+                    projectName: projectName,
+                    projectDescription: projectDescription,
+                    managerId: projectManagerId,
+                    startDate: projectStartDate,
+                    endDate: projectEndDate
+                })
+            });
+            const data = await response.json();
+            console.log("Data:", data);
+            if (!response.ok) {
+                console.error("Error in response:", data.message);
+                return;
+            }
+            navigate('/project-view', {
+                state: {
+                    employee_id,
+                    token,
+                    employee_header_button,
+                    employee_add_button,
+                    employee_update_button,
+                    project_header_button,
+                    project_add_button,
+                    project_update_button,
+                    audit_header_button,
+                    project_id
+                }
+            });
+        }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+
     }
+
     return (
         <div>
             <Header
@@ -93,7 +143,7 @@ function ProjectEdit() {
 
                     <div className="card-footer" >
                         <div className="d-flex justify-content-center align-items-center">
-                            <button type="submit" className="btn btn-primary" onClick={() => { navigate('/project-view') }}>Submit</button>
+                            <button type="submit" className="btn btn-primary" >Submit</button>
                         </div>
 
                     </div>

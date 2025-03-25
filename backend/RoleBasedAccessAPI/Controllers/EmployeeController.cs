@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace RoleBasedAccessAPI.Controllers
 {
@@ -178,6 +179,41 @@ namespace RoleBasedAccessAPI.Controllers
                 return BadRequest(new { Message = message });
 
             return StatusCode(500, new { Message = message });
+        }
+
+
+        [HttpPost("GetProjects")]
+        public async Task<IActionResult> GetProjects([FromBody] GetProjects data)
+        {
+            var (isOk, result) = await _userRepository.GetProjects(data);
+            if (result is List<Dictionary<string, object>> projectsData && projectsData.Count > 0 && isOk)
+            {
+                return Ok(projectsData);
+            }
+
+            else if(isOk == false)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(500, new { message = "Database Error" });
+        }
+
+        [HttpPost("GetProject")]
+        public async Task<IActionResult> GetProject([FromBody] GetProject data)
+        {
+            var (isOk, result) = await _userRepository.GetProject(data);
+            if (result is Dictionary<string, object> projectData && projectData.Count > 0 && isOk)
+            {
+                return Ok(projectData);
+            }
+
+            else if (isOk == false)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(500, new { message = "Database Error" });
         }
 
     }

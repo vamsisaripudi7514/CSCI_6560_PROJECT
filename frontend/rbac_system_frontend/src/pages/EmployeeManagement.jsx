@@ -37,7 +37,8 @@ function EmployeeManagement() {
                 const response = await fetch(`http://localhost:7011/api/Employee/GetAllEmployees?userId=${employee_id}`);
                 const data = await response.json();
                 console.log("Data:", data);
-                setEmployees(data);
+                setEmployees(Array.isArray(data) ? data : []);
+               
             }
             catch (error) {
                 console.error("Error fetching data:", error);

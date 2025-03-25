@@ -1,8 +1,9 @@
-import React from "react";
+import React, { use } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 function ProjectView() {
     const location = useLocation();
         const {
@@ -14,17 +15,45 @@ function ProjectView() {
             project_header_button,
             project_add_button,
             project_update_button,
-            audit_header_button
+            audit_header_button,
+            project_id,
+            project_name
         } = location.state || {};
     const navigate = useNavigate();
     const [project, setProject] = useState({
-        projectId: 101,
-        projectName: "Project 1",
-        projectDescription: "Sample Project",
-        projectManagerId: 30001,
-        projectStartDate: "21-09-2021",
-        projectEndDate: "31-12-2021",
+
     });
+    useEffect(()=>{
+        const getProject = async()=>{
+            try{
+                const response = await fetch(`http://localhost:7011/api/Employee/GetProject`,{
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ employee_id: employee_id, project_id: project_id })
+                });
+                const data = await response.json();
+                console.log("Data:", data);
+                setProject(data);
+            }
+            catch(error){
+                console.error("Error fetching data:", error);
+            }
+        }
+        getProject();
+    },[]);
+    function processString(string) {
+        let ans ="";
+        if(string == null){
+            return "N/A";
+        }
+        for (let i = 0; i < string.length; i++) {
+            if (string[i] === 'T') {
+                break;
+            }
+            ans += string[i];
+        }
+        return ans;
+    }   
     return (
         <div>
            <Header
@@ -44,9 +73,28 @@ function ProjectView() {
                         <ion-icon name="briefcase-outline"></ion-icon> Project Info
                         <small className="float-right">
                             {
-                                1 ?
-                                    (<button type="button" className="btn btn-block btn-primary" onClick={() => { navigate('/project-edit') }}>Edit</button>)
-                                    : (<></>)
+                                project_update_button &&
+                                <Link to="/project-edit" className="btn btn-primary"
+                                state={{
+                                    employee_id: employee_id,
+                                    token: token,
+                                    employee_header_button: employee_header_button,
+                                    employee_add_button: employee_add_button,
+                                    employee_update_button: employee_update_button,
+                                    project_header_button: project_header_button,
+                                    project_add_button: project_add_button,
+                                    project_update_button: project_update_button,
+                                    audit_header_button: audit_header_button,
+                                    project_id: project.project_id,
+                                    project_name : project.project_name,
+                                    manager_id: project.manager_id,
+                                    start_date: project.start_date,
+                                    end_date: project.end_date,
+                                    project_description: project.project_description
+                                }}
+                                >Edit</Link>
+                                    // <button type="button" className="btn btn-block btn-primary" onClick={() => { navigate('/project-edit') }}>Edit</button>)
+                                    
                             }
                         </small>
                     </h4>
@@ -55,27 +103,27 @@ function ProjectView() {
                     <div className="col-sm-4 invoice-col">
                         <strong>Project Name</strong>
                         <address>
-                            {project.projectName}<br />
+                            {project.project_name}<br />
 
                         </address>
                     </div>
                     <div className="col-sm-4 invoice-col">
                         <strong>Manager ID</strong>
                         <address>
-                            {project.projectManagerId}<br />
+                            {project.manager_id}<br />
 
                         </address>
                     </div>
                     <div className="col-sm-4 invoice-col">
                         <strong>Start Date</strong>
                         <address>
-                            {project.projectStartDate}<br />
+                            {processString(project.start_date)}<br />
                         </address>
                     </div>
                     <div className="col-sm-4 invoice-col">
                         <strong>End Date</strong>
                         <address>
-                            {project.projectEndDate}<br />
+                            {processString(project.end_date)}<br />
                         </address>
                     </div>
                 </div>
@@ -83,7 +131,7 @@ function ProjectView() {
                     <div className="col-sm-4 invoice-col">
                         <strong>Project Description</strong>
                         <address>
-                            {project.projectDescription}<br />
+                            {project.project_description}<br />
 
                         </address>
                     </div>

@@ -599,6 +599,117 @@ namespace RoleBasedAccessAPI.Data.Repository
             }
         }
 
+        public async Task<(bool IsOk,object)> GetProjects(GetProjects getProjects)
+        {
+            try
+            {
+                using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+                {
+                    await connection.OpenAsync();
+
+                    using (var command = new MySqlCommand("sp_get_projects", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = getProjects.employee_id });
+                        var outputParam = new MySqlParameter("p_flag", MySqlDbType.Int32)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(outputParam);
+                        var projectsData = new List<Dictionary<string, object>>();
+
+                        using (var reader = await command.ExecuteReaderAsync())
+                        {
+                            
+
+                            while (await reader.ReadAsync())
+                            {
+                                var projectData = new Dictionary<string, object>();
+
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    string columnName = reader.GetName(i);
+                                    object columnValue = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                    projectData[columnName] = columnValue;
+                                }
+                                projectsData.Add(projectData);
+
+                            }
+                           
+
+                        }
+                        if ((int)outputParam.Value == -1)
+                        {
+                            return (false, new { message = "Access/Denied or No Permission" });
+                        }
+                        return (true, projectsData);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false,new { Message = "An unexpected error occurred.", Error = ex.Message });
+            }
+
+            return (false, new { message = "End of Function" });
+        }
+
+
+        public async Task<(bool IsOk, object)> GetProject(GetProject getProject)
+        {
+            try
+            {
+                using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+                {
+                    await connection.OpenAsync();
+
+                    using (var command = new MySqlCommand("sp_get_project", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = getProject.employee_id });
+                        command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32) { Value = getProject.project_id });
+                        var outputParam = new MySqlParameter("p_flag", MySqlDbType.Int32)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(outputParam);
+                        var projectData = new Dictionary<string, object>();
+
+                        using (var reader = await command.ExecuteReaderAsync())
+                        {
+
+
+                            if (await reader.ReadAsync())
+                            {
+
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    string columnName = reader.GetName(i);
+                                    object columnValue = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                    projectData[columnName] = columnValue;
+                                }
+                            }
+
+
+                        }
+                        if ((int)outputParam.Value == -1)
+                        {
+                            return (false, new { message = "Access/Denied or No Permission" });
+                        }
+                        return (true, projectData);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, new { Message = "An unexpected error occurred.", Error = ex.Message });
+            }
+
+            return (false, new { message = "End of Function" });
+        }
+
     }
 }
 

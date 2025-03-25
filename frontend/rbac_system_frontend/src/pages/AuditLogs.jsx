@@ -14,7 +14,7 @@ function AuditLogs() {
                     body: JSON.stringify({ employeeID: employee_id })
                 });
                 const data = await response.json();
-                setAuditLogs(data);
+                setAuditLogs((Array.isArray(data) ? data : []));
             }
             catch (error) {
                 console.error("Error fetching data:", error);

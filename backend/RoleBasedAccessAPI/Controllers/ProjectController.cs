@@ -75,5 +75,19 @@ namespace RoleBasedAccessAPI.Controllers
             return NotFound(new { Message = "No projects found." });
         }
 
+        [HttpPost("InsertProject")]
+        public async Task<IActionResult> InsertEmployee([FromBody] AddProject data)
+        {
+            string encryptionKey = "B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613";
+
+            var result = await _projectRepository.InsertProjectAsync(data, encryptionKey);
+
+            if (result.IsSuccess)
+                return Ok(new { message = result.Message });
+
+            return BadRequest(new { message = result.Message });
+        }
     }
+
+
 }

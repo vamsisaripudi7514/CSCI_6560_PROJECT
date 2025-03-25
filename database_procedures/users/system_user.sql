@@ -9,7 +9,10 @@ GRANT EXECUTE ON PROCEDURE rbac_system.sp_get_employee_details TO 'system_user'@
 GRANT EXECUTE ON PROCEDURE rbac_system.sp_update_employee TO 'system_user'@'localhost'; -- c
 GRANT EXECUTE ON PROCEDURE rbac_system.sp_insert_employee To 'system_user'@'localhost'; -- c
 GRANT EXECUTE ON PROCEDURE rbac_system.sp_select_timesheet TO 'system_user'@'localhost'; -- c
+GRANT EXECUTE ON PROCEDURE rbac_system.sp_insert_project TO 'system_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE rbac_system.sp_select_project TO 'system_user'@'localhost'; -- c
+GRANT EXECUTE ON PROCEDURE rbac_system.sp_get_projects TO 'system_user'@'localhost';
+GRANT EXECUTE ON PROCEDURE rbac_system.sp_get_project TO 'system_user'@'localhost';
 GRANT EXECUTE ON PROCEDURE rbac_system.sp_update_project TO 'system_user'@'localhost'; -- c
 GRANT EXECUTE ON PROCEDURE rbac_system.sp_project_mapping_update_list TO 'system_user'@'localhost'; -- c
 GRANT EXECUTE ON PROCEDURE rbac_system.sp_update_project_mapping TO 'system_user'@'localhost'; -- c

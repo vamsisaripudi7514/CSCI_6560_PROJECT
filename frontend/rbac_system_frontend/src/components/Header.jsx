@@ -5,7 +5,7 @@ import "admin-lte/dist/css/adminlte.min.css";
 import { useState, useEffect,useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Header({ employee_id, token, employee_header_button, employee_add_button, employee_update_button, project_header_button, project_add_button, project_update_button, audit_header_button }) {
+function Header({ employee_name, employee_id, token, employee_header_button, employee_add_button, employee_update_button, project_header_button, project_add_button, project_update_button, audit_header_button }) {
 
     // console.log("Employee Header Button:", employee_header_button);
     // console.log("Employee Add Button:", employee_add_button);
@@ -39,6 +39,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                 <li className="nav-item d-none d-sm-inline-block">
                     <Link to="/dashboard" className="nav-link"
                     state={{
+                        employee_name,
                         employee_id,
                         token,
                         employee_header_button,
@@ -55,6 +56,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                     <li className="nav-item d-none d-sm-inline-block">
                         <Link to="/employee-management" className="nav-link"
                         state={{
+                            employee_name,
                             employee_id,
                             token,
                             employee_header_button,
@@ -72,6 +74,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                     <li className="nav-item d-none d-sm-inline-block">
                         <Link to="/project-management" className="nav-link"
                         state={{
+                            employee_name,
                             employee_id,
                             token,
                             employee_header_button,
@@ -89,6 +92,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                     <li className="nav-item d-none d-sm-inline-block">
                         <Link to="/audit-logs" className="nav-link"
                         state={{
+                            employee_name,
                             employee_id,
                             token,
                             employee_header_button,
@@ -130,6 +134,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                     <ul className="dropdown-menu border-0 shadow" aria-labelledby="dropdownSubMenu2">
                         <li><Link to="/profile-view" className="dropdown-item"
                         state={{
+                            employee_name,
                             employee_id,
                             token,
                             employee_header_button,
@@ -144,6 +149,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                         {/* <button onClick={handleProfileView}>Profile</button> */}
                         <li><Link to="/update-password" className="dropdown-item"
                         state={{
+                            employee_name,
                             employee_id,
                             target_employee_id: employee_id,
                             token,
@@ -158,6 +164,7 @@ function Header({ employee_id, token, employee_header_button, employee_add_butto
                         >Update Password</Link></li>
                         <li><Link to="/" className="dropdown-item"
                         state={{
+                            employee_name,
                             employee_id,
                             token,
                             employee_header_button,

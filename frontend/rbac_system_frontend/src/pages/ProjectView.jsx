@@ -7,6 +7,7 @@ import { useEffect } from "react";
 function ProjectView() {
     const location = useLocation();
         const {
+            employee_name,
             employee_id,
             token,
             employee_header_button,
@@ -57,6 +58,7 @@ function ProjectView() {
     return (
         <div>
            <Header
+                employee_name = {employee_name}
                 employee_id = {employee_id}
                 token = {token}
                 employee_header_button={ employee_header_button}
@@ -76,6 +78,7 @@ function ProjectView() {
                                 project_update_button &&
                                 <Link to="/project-edit" className="btn btn-primary"
                                 state={{
+                                    employee_name: employee_name,
                                     employee_id: employee_id,
                                     token: token,
                                     employee_header_button: employee_header_button,

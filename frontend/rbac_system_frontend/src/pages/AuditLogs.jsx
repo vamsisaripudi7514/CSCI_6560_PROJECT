@@ -25,6 +25,7 @@ function AuditLogs() {
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState('');
     const {
+        employee_name,
         employee_id,
         token,
         employee_header_button,
@@ -72,6 +73,7 @@ function AuditLogs() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id={employee_id}
                 token={token}
                 employee_header_button={employee_header_button}

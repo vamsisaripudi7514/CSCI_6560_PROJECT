@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 function ProjectEdit() {
     const location = useLocation();
     const {
+        employee_name,
         employee_id,
         token,
         employee_header_button,
@@ -57,6 +58,7 @@ function ProjectEdit() {
             }
             navigate('/project-view', {
                 state: {
+                    employee_name,
                     employee_id,
                     token,
                     employee_header_button,
@@ -79,6 +81,7 @@ function ProjectEdit() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id={employee_id}
                 token={token}
                 employee_header_button={employee_header_button}

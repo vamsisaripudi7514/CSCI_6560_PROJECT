@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 function EmployeeEdit() {
     const location = useLocation();
     const {
+        
         employee_id,
         token,
         employee_header_button,
@@ -62,6 +63,7 @@ function EmployeeEdit() {
             console.log("Data:", data);
             navigate("/employee-view", {
                 state: {
+                    employee_name: employee_name,
                     employee_id: employee_id,
                     token: token,
                     employee_header_button: employee_header_button,
@@ -79,6 +81,7 @@ function EmployeeEdit() {
         }
         navigate("/employee-view", {
            state: {
+                employee_name: employee_name,
                 employee_id: employee_id,
                 token: token,
                 employee_header_button: employee_header_button,
@@ -101,6 +104,7 @@ function EmployeeEdit() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id={employee_id}
                 token={token}
                 employee_header_button={employee_header_button}

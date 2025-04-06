@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 function PageNotFound(){
     const location = useLocation();
         const {
+            employee_name,
             employee_id,
             token,
             employee_header_button,

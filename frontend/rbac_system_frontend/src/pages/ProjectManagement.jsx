@@ -8,6 +8,7 @@ import { useEffect } from "react";
 function ProjectManagement() {
     const location = useLocation();
         const {
+            employee_name,
             employee_id,
             token,
             employee_header_button,
@@ -53,6 +54,7 @@ function ProjectManagement() {
     return (
         <div>
             <Header
+                employee_name = {employee_name}
                 employee_id = {employee_id}
                 token = {token}
                 employee_header_button={ employee_header_button}
@@ -77,6 +79,7 @@ function ProjectManagement() {
                     <div className="float-right"  style={{marginBottom: "10px"}}>
                         <Link to="/project-add" className="btn btn-primary"
                         state={{
+                            employee_name,
                             employee_id,
                             token,
                             employee_header_button,
@@ -110,6 +113,7 @@ function ProjectManagement() {
                                 <td>
                                     <Link to="/project-view" className="btn btn-sm btn-primary"
                                         state={{
+                                            employee_name,
                                             employee_id,
                                             token,
                                             employee_header_button,

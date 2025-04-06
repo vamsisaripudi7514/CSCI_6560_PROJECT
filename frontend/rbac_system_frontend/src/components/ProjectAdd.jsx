@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 function ProjectAdd() {
     const location = useLocation();
     const {
+        employee_name,
         employee_id,
         token,
         employee_header_button,
@@ -49,6 +50,7 @@ function ProjectAdd() {
             
             navigate('/project-management', {
                 state: {
+                    employee_name,
                     employee_id,
                     token,
                     employee_header_button,
@@ -68,6 +70,7 @@ function ProjectAdd() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id={employee_id}
                 token={token}
                 employee_header_button={employee_header_button}

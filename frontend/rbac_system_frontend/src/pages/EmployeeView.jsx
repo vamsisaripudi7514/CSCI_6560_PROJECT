@@ -7,6 +7,7 @@ import { useEffect } from "react";
 function EmployeeView() {
     const location = useLocation();
     const {
+        employee_name,
         employee_id,
         token,
         employee_header_button,
@@ -79,6 +80,7 @@ function EmployeeView() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id={employee_id}
                 token={token}
                 employee_header_button={employee_header_button}
@@ -98,6 +100,7 @@ function EmployeeView() {
                                 employee_update_button  &&
                                     <Link to="/employee-edit" className="btn btn-primary"
                                     state={{
+                                        employee_name: employee_name,
                                         employee_id: employee_id,
                                         token: token,
                                         employee_header_button: employee_header_button,
@@ -180,6 +183,7 @@ function EmployeeView() {
                                             project_update_button &&
                                              <Link to ="/project-mapping-edit" className="btn btn-primary"
                                              state={{
+                                                employee_name: employee_name,
                                                 employee_id: employee_id,
                                                 token: token,
                                                 employee_header_button: employee_header_button,

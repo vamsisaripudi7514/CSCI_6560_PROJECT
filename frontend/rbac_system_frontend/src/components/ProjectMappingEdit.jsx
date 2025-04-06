@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 function ProjectMappingEdit() {
     const location = useLocation();
         const {
+            employee_name,
             employee_id,
             token,
             employee_header_button,
@@ -76,6 +77,7 @@ function ProjectMappingEdit() {
             console.log("Data111:", data);
             navigate("/employee-view", {
                 state: {
+                    employee_name: employee_name,
                     employee_id: employee_id,
                     token: token,
                     employee_header_button: employee_header_button,
@@ -96,6 +98,7 @@ function ProjectMappingEdit() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id = {employee_id}
                 token = {token}
                 employee_header_button={ employee_header_button}

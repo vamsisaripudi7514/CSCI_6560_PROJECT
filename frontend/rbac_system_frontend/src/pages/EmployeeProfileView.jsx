@@ -7,6 +7,7 @@ import { useEffect } from "react";
 function EmployeeProfileView() {
     const location = useLocation();
     const {
+        employee_name,
         employee_id,
         token,
         employee_header_button,
@@ -79,6 +80,7 @@ function EmployeeProfileView() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id={employee_id}
                 token={token}
                 employee_header_button={employee_header_button}

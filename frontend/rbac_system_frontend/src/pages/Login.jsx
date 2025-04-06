@@ -50,6 +50,7 @@ const Login =  () => {
           console.log("Buttons:", buttons);
           navigate("/dashboard",{
             state:{
+                employee_name: username,
                 employee_id: data.employee_id,
                 token: data.token,
                 employee_header_button: buttons.employee_header_button,
@@ -168,11 +169,11 @@ const Login =  () => {
                         />
                     </div>
                     <button type="submit" className="login-btn">Login</button>
-                    <p className="forgot-password">
-                        <a href="#" onClick={() => alert("Reset password functionality here")}>
+                    {/* <p className="forgot-password">
+                        <a href="#" onClick={() =>navigate("/reset-password")}>
                             Forgot Your Password?
                         </a>
-                    </p>
+                    </p> */}
                 </form>
             </div>
         </div>

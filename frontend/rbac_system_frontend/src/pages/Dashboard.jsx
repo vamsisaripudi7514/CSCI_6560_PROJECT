@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 function Dashboard() {
     const location = useLocation();
     const {
+        employee_name,
         employee_id,
         token,
         employee_header_button,
@@ -23,6 +24,7 @@ function Dashboard() {
     return (
         <div className="dashboard">
             <Header
+                employee_name={employee_name}
                 employee_id = {employee_id}
                 token = {token}
                 employee_header_button={ employee_header_button}

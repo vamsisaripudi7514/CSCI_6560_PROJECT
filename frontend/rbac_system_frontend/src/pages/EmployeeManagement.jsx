@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 function EmployeeManagement() {
     const location = useLocation();
     const {
+        employee_name,
         employee_id,
         token,
         employee_header_button,
@@ -59,6 +60,7 @@ function EmployeeManagement() {
     return (
         <div>
             <Header
+                employee_name={employee_name}
                 employee_id={employee_id}
                 token={token}
                 employee_header_button={employee_header_button}
@@ -95,6 +97,7 @@ function EmployeeManagement() {
                         {employee_add_button &&
                             <Link to="/employee-add" className="btn btn-primary"
                                 state={{
+                                    employee_name,
                                     employee_id,
                                     token,
                                     employee_header_button,
@@ -153,6 +156,7 @@ function EmployeeManagement() {
                                             navigate('/employee-view',
                                                 {
                                                     state: {
+                                                        employee_name: employee_name,
                                                         employee_id: employee_id,
                                                         token: token,
                                                         employee_header_button: employee_header_button,

@@ -18,7 +18,7 @@ namespace RoleBasedAccessAPI.Data.Repository
             _context = context;
         }
 
-        // ✅ User Login (Retaining working version)
+        //  User Login (Retaining working version)
         public async Task<int> LoginUserAsync(UserLoginDto loginDto)
         {
             int userId = -3; // Default error code
@@ -35,7 +35,7 @@ namespace RoleBasedAccessAPI.Data.Repository
                     command.Parameters.Add(new MySqlParameter("p_username", MySqlDbType.VarChar) { Value = loginDto.Username });
                     command.Parameters.Add(new MySqlParameter("p_user_password", MySqlDbType.VarChar) { Value = loginDto.Password });
 
-                    // ✅ Convert decryption key to HEX format
+                    //  Convert decryption key to HEX format
                     string decryptionKeyHex = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1";
                     command.Parameters.Add(new MySqlParameter("p_decryption_key", MySqlDbType.VarChar) { Value = decryptionKeyHex });
 
@@ -55,7 +55,7 @@ namespace RoleBasedAccessAPI.Data.Repository
 
 
 
-        // ✅ Update Password
+        //  Update Password
         public async Task<int> UpdatePasswordAsync(string username, string currentPassword, string newPassword)
         {
             int updateResult = -3;
@@ -86,7 +86,7 @@ namespace RoleBasedAccessAPI.Data.Repository
             return updateResult;
         }
 
-        // ✅ Search Employee
+        //  Search Employee
         public async Task<List<employee>> SearchEmployeeAsync(string searchTerm)
         {
             List<employee> employees = new List<employee>();
@@ -179,7 +179,7 @@ namespace RoleBasedAccessAPI.Data.Repository
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        // ✅ Pass User ID as a parameter
+                        //  Pass User ID as a parameter
                         command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = userId });
 
                         using (var reader = await command.ExecuteReaderAsync())
@@ -198,7 +198,7 @@ namespace RoleBasedAccessAPI.Data.Repository
                                 }
                                 employees.Add(employeeData);
                             }
-                            return employees; // ✅ Return JSON dynamically
+                            return employees; //  Return JSON dynamically
                         }
                     }
                 }
@@ -217,7 +217,7 @@ namespace RoleBasedAccessAPI.Data.Repository
 
 
 
-        // ✅ Insert Employee
+        //  Insert Employee
         public async Task<(bool IsSuccess, string Message)> InsertEmployeeAsync(InsertEmployee insertEmployeeDto, string encryptionKey)
         {
             try
@@ -435,7 +435,7 @@ namespace RoleBasedAccessAPI.Data.Repository
         }
 
 
-        // ✅ Select Timesheet
+        //  Select Timesheet
         public async Task<object> SelectTimesheetAsync(SelectTimesheet selectTimesheetDto)
         {
             try
@@ -491,7 +491,7 @@ namespace RoleBasedAccessAPI.Data.Repository
 
 
 
-        // ✅ Update Project Mapping
+        //  Update Project Mapping
         //public async Task<int> UpdateProjectMappingAsync(int projectId, int employeeId, int oldProjectId)
         //{
         //    int result = -1;
@@ -513,7 +513,7 @@ namespace RoleBasedAccessAPI.Data.Repository
         //    return result;
         //}
 
-        // ✅ Button Visibility
+        //  Button Visibility
         public async Task<object> GetButtonVisibilityAsync(int employeeId)
         {
             try
@@ -555,7 +555,7 @@ namespace RoleBasedAccessAPI.Data.Repository
             }
         }
 
-        // ✅ Update Project Mapping
+        //  Update Project Mapping
         public async Task<(bool IsSuccess, string Message)> UpdateProjectMappingAsync(UpdateProjectMapping updateMappingDto)
         {
             try

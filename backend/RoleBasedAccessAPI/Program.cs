@@ -4,6 +4,10 @@ using RoleBasedAccessAPI.Data.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using RoleBasedAccessAPI.Utility;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace RoleBasedAccessAPI
 {
@@ -15,6 +19,12 @@ namespace RoleBasedAccessAPI
 
             // Load Configuration
             var configuration = builder.Configuration;
+
+            JwtHelper.SecretKey = configuration.GetValue<string>("Jwt:Key") ?? "";
+            JwtHelper.Key = Encoding.ASCII.GetBytes(JwtHelper.SecretKey);
+            JwtHelper.strIssuer = configuration.GetValue<string>("Jwt:Issuer") ?? "";
+            JwtHelper.strAudince = configuration.GetValue<string>("Jwt:Audience") ?? "";
+
             builder.Services.AddControllers();
 
             // ✅ Add Database Context with MySQL Connection
@@ -40,29 +50,67 @@ namespace RoleBasedAccessAPI
             });
 
             // ✅ Add JWT Authentication
-            var jwtKey = Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"] ?? "your-super-secret-key");
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            builder.Services.AddAuthentication(op =>
+            {
+                op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                op.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                op.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options =>
                 {
+
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = configuration["JwtSettings:Issuer"] ?? "yourdomain.com",
-                        ValidAudience = configuration["JwtSettings:Audience"] ?? "yourdomain.com",
-                        IssuerSigningKey = new SymmetricSecurityKey(jwtKey)
+                        ValidIssuer = JwtHelper.strIssuer,
+                        ValidAudience = JwtHelper.strAudince,
+                        IssuerSigningKey = new SymmetricSecurityKey(JwtHelper.Key)
                     };
                 });
-
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<IgetTokenData, getTokenDataFromJWT>();
             // ✅ Add Authorization
             builder.Services.AddAuthorization();
 
             // ✅ Add Swagger for API Documentation
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "JWTToken_Auth_API",
+                    Version = "v1"
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+          new OpenApiSecurityScheme
+          {
+            Reference = new OpenApiReference
+              {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+              },
+
+            },
+            new List<string>()
+          }
+                });
+                //c.OperationFilter<SecureEndPointAuthRequirementFilter>();
+            });
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowReactApp", policy =>
@@ -88,6 +136,7 @@ namespace RoleBasedAccessAPI
             app.UseSession();  // Enable session tracking before authentication
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<JWTMiddleWare>();
 
             // ✅ Register Controllers
             app.MapControllers();

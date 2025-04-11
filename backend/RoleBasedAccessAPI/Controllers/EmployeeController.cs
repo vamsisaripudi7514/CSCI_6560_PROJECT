@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using RoleBasedAccessAPI.Utility;
 
 namespace RoleBasedAccessAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JWTAuthorize]
     public class EmployeeController : ControllerBase
     {
         private readonly UserRepository _userRepository;
@@ -66,7 +68,7 @@ namespace RoleBasedAccessAPI.Controllers
         #endregion
 
 
-        // ✅ Search Employees
+        
         [HttpGet("SearchEmployee")]
         public async Task<IActionResult> SearchEmployees([FromQuery] string searchTerm)
         {
@@ -113,7 +115,7 @@ namespace RoleBasedAccessAPI.Controllers
 
 
 
-        // ✅ Insert Employee API
+        
         [HttpPost("InsertEmployee")]
         public async Task<IActionResult> InsertEmployee([FromBody] InsertEmployee insertEmployeeDto)
         {
@@ -128,7 +130,7 @@ namespace RoleBasedAccessAPI.Controllers
         }
 
 
-        // ✅ Update Employee API
+        
         [HttpPut("updateEmployee")]
         //[Authorize]
         public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployee updateEmployeeDto)
@@ -164,7 +166,7 @@ namespace RoleBasedAccessAPI.Controllers
 
 
 
-        // ✅ Update Project Mapping
+       
         [HttpPut("updateProjectMapping")]
         public async Task<IActionResult> UpdateProjectMapping([FromBody] UpdateProjectMapping updateMappingDto)
         {

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RoleBasedAccessAPI.Data.Model;
 using RoleBasedAccessAPI.Data.Repository;
+using RoleBasedAccessAPI.Utility;
 
 namespace RoleBasedAccessAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JWTAuthorize]
     public class AuditLogsController : Controller
     {
         private readonly AuditRepository _auditRepository;

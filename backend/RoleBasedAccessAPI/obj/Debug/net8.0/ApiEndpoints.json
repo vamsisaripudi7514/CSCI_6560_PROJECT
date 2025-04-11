@@ -1,5 +1,53 @@
 [
   {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.AuditLogsController",
+    "Method": "GetAuditLogs",
+    "RelativePath": "api/AuditLogs/GetAuditLogs",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "RoleBasedAccessAPI.Data.Model.SelectAuditLogs",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.AuditLogsController",
+    "Method": "GetUserAuditLogs",
+    "RelativePath": "api/AuditLogs/GetUserAuditLogs",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "RoleBasedAccessAPI.Data.Model.GetUserAuditLogs",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.AuthController",
+    "Method": "GetButtonVisibility",
+    "RelativePath": "api/Auth/ButtonVisibility",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "buttonVisibilityDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.ButtonVisibility",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RoleBasedAccessAPI.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
@@ -18,14 +66,14 @@
   {
     "ContainingType": "RoleBasedAccessAPI.Controllers.AuthController",
     "Method": "UpdatePassword",
-    "RelativePath": "api/Auth/updatePassword",
+    "RelativePath": "api/Auth/UpdatePassword",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "updatePasswordDto",
-        "Type": "RoleBasedAccessAPI.Data.Model.UpdatePasswordDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.UpdateUserPassword",
         "IsRequired": true
       }
     ],
@@ -33,7 +81,7 @@
   },
   {
     "ContainingType": "RoleBasedAccessAPI.Controllers.EmployeeController",
-    "Method": "GetAllEmployees",
+    "Method": "Get_sp_select_employees",
     "RelativePath": "api/Employee/GetAllEmployees",
     "HttpMethod": "GET",
     "IsController": true,
@@ -50,25 +98,47 @@
   {
     "ContainingType": "RoleBasedAccessAPI.Controllers.EmployeeController",
     "Method": "GetEmployeeDetailsAsync",
-    "RelativePath": "api/Employee/GetEmployeeDetailsAsync",
-    "HttpMethod": "GET",
+    "RelativePath": "api/Employee/GetEmployeeDetails",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
+        "Name": "request",
+        "Type": "RoleBasedAccessAPI.Data.Model.GetEmployeeDetail",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.EmployeeController",
+    "Method": "GetProject",
+    "RelativePath": "api/Employee/GetProject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "employeeId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
+        "Name": "data",
+        "Type": "RoleBasedAccessAPI.Data.Model.GetProject",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.EmployeeController",
+    "Method": "GetProjects",
+    "RelativePath": "api/Employee/GetProjects",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "decryptionKey",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "data",
+        "Type": "RoleBasedAccessAPI.Data.Model.GetProjects",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -82,8 +152,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "emp",
-        "Type": "RoleBasedAccessAPI.Data.Model.employee",
+        "Name": "insertEmployeeDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.InsertEmployee",
         "IsRequired": true
       }
     ],
@@ -107,15 +177,31 @@
   },
   {
     "ContainingType": "RoleBasedAccessAPI.Controllers.EmployeeController",
+    "Method": "SelectTimesheet",
+    "RelativePath": "api/Employee/selectTimesheet",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "selectTimesheetDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.SelectTimesheet",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.EmployeeController",
     "Method": "UpdateEmployee",
-    "RelativePath": "api/Employee/UpdateEmployee",
+    "RelativePath": "api/Employee/updateEmployee",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "emp",
-        "Type": "RoleBasedAccessAPI.Data.Model.employee",
+        "Name": "updateEmployeeDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.UpdateEmployee",
         "IsRequired": true
       }
     ],
@@ -124,20 +210,79 @@
   {
     "ContainingType": "RoleBasedAccessAPI.Controllers.EmployeeController",
     "Method": "UpdateProjectMapping",
-    "RelativePath": "api/Employee/UpdateProjectMapping",
+    "RelativePath": "api/Employee/updateProjectMapping",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "projectId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
+        "Name": "updateMappingDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.UpdateProjectMapping",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.ProjectController",
+    "Method": "InsertEmployee",
+    "RelativePath": "api/Project/InsertProject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "employeeId",
-        "Type": "System.Int32",
-        "IsRequired": false
+        "Name": "data",
+        "Type": "RoleBasedAccessAPI.Data.Model.AddProject",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.ProjectController",
+    "Method": "ProjectMappingUpdateList",
+    "RelativePath": "api/Project/projectMappingUpdateList",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "projectMappingListDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.ProjectMappingList",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.ProjectController",
+    "Method": "SelectProject",
+    "RelativePath": "api/Project/selectProject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "selectProjectDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.SelectProject",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RoleBasedAccessAPI.Controllers.ProjectController",
+    "Method": "UpdateProject",
+    "RelativePath": "api/Project/updateProject",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateProjectDto",
+        "Type": "RoleBasedAccessAPI.Data.Model.UpdateProject",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

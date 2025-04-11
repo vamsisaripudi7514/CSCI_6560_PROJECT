@@ -80,23 +80,34 @@ namespace RoleBasedAccessAPI.Controllers
         }
 
 
-        [HttpGet("GetEmployeeDetailsAsync")]
-        public async Task<IActionResult> GetEmployeeDetailsAsync([FromQuery] int userId, [FromQuery] int employeeId, [FromQuery] string decryptionKey)
+        
+        [HttpPost("GetEmployeeDetails")]
+        public async Task<IActionResult> GetEmployeeDetailsAsync([FromBody] GetEmployeeDetail request)
         {
-            if (userId <= 0 || employeeId <= 0 || string.IsNullOrEmpty(decryptionKey))
+            if (request == null || request.SourceEmployeeId <= 0 || request.TargetEmployeeId <= 0)
             {
                 return BadRequest(new { Message = "Invalid request parameters" });
             }
 
-            var employeeData = await _userRepository.GetEmployeeDetailsAsync(userId, employeeId, decryptionKey);
+            // Hardcoded decryption key
+            string decryptionKey = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1";
+
+            var employeeData = await _userRepository.GetEmployeeDetailsAsync(request, decryptionKey);
 
             if (employeeData == null)
             {
                 return NotFound(new { Message = "Employee details not found or access denied" });
             }
 
-            return Ok(employeeData); // Return as JSON without mapping to a model
+            if (employeeData is IDictionary<string, object> employeeDict)
+            {
+                return Ok(employeeDict);
+            }
+
+            return StatusCode(500, employeeData);
         }
+
+
 
 
         // ✅ Insert Employee API

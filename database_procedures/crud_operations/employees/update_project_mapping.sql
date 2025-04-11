@@ -2,7 +2,8 @@ DELIMITER $$
 CREATE PROCEDURE sp_update_project_mapping(
     p_user_id INT,
     p_employee_id INT,
-    p_project_id INT
+    p_project_id INT,
+    p_old_project_id INT
 )
 BEGIN
 
@@ -38,7 +39,7 @@ BEGIN
 
     UPDATE employee_projects
     SET project_id = p_project_id
-    WHERE employee_id  = p_employee_id;
+    WHERE employee_id  = p_employee_id AND project_id = p_old_project_id;
     CALL sp_audit_log(p_user_id, 'UPDATE', 'employee_projects', p_employee_id);
     SELECT 'Project Mapping Updated Successfully' AS Message;
 END$$

@@ -165,7 +165,7 @@ namespace RoleBasedAccessAPI.Data.Repository
         //    }
         //    return employees;
         //}
-        
+
         #endregion
         public async Task<object> Get_sp_select_employees(int userId) //sp_select_employees
         {
@@ -372,15 +372,20 @@ namespace RoleBasedAccessAPI.Data.Repository
 
                         using (var reader = await command.ExecuteReaderAsync())
                         {
-                            if (await reader.ReadAsync())
+                            var results = new List<Dictionary<string, object>>();
+                            while (await reader.ReadAsync())
                             {
-                                var result = new Dictionary<string, object>();
+                                var row = new Dictionary<string, object>();
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
-                                    result[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+
+                                    row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                    Console.WriteLine(reader.GetName(i));
+
                                 }
-                                return result;
+                                results.Add(row);
                             }
+                            return results; // returns a list of dictionaries (possibly empty)
                         }
                     }
                 }
@@ -389,8 +394,6 @@ namespace RoleBasedAccessAPI.Data.Repository
             {
                 return new { Message = "An unexpected error occurred.", Error = ex.Message };
             }
-
-            return null;
         }
 
 
@@ -426,6 +429,7 @@ namespace RoleBasedAccessAPI.Data.Repository
             catch (Exception ex)
             {
                 // Log exception here
+                Console.WriteLine("the error is " + ex);
                 return false;
             }
         }
@@ -488,27 +492,28 @@ namespace RoleBasedAccessAPI.Data.Repository
 
 
         // ✅ Update Project Mapping
-        public async Task<int> UpdateProjectMappingAsync(int projectId, int employeeId)
-        {
-            int result = -1;
+        //public async Task<int> UpdateProjectMappingAsync(int projectId, int employeeId, int oldProjectId)
+        //{
+        //    int result = -1;
 
-            using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
-            {
-                await connection.OpenAsync();
+        //    using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+        //    {
+        //        await connection.OpenAsync();
 
-                using (var command = new MySqlCommand("sp_update_project_mapping", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32) { Value = projectId });
-                    command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = employeeId });
+        //        using (var command = new MySqlCommand("sp_update_project_mapping", connection))
+        //        {
+        //            command.CommandType = CommandType.StoredProcedure;
+        //            command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32) { Value = projectId });
+        //            command.Parameters.Add(new MySqlParameter("p_employee_id", MySqlDbType.Int32) { Value = employeeId });
+        //            command.Parameters.Add(new MySqlParameter("p_old_project_id", MySqlDbType.Int32) { Value = oldProjectId});
 
-                    result = await command.ExecuteNonQueryAsync();
-                }
-            }
-            return result;
-        }
-      
-       // ✅ Button Visibility
+        //            result = await command.ExecuteNonQueryAsync();
+        //        }
+        //    }
+        //    return result;
+        //}
+
+        // ✅ Button Visibility
         public async Task<object> GetButtonVisibilityAsync(int employeeId)
         {
             try
@@ -570,7 +575,10 @@ namespace RoleBasedAccessAPI.Data.Repository
                         { Value = updateMappingDto.TargetEmployeeId });
 
                         command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32)
-                        { Value = updateMappingDto.ProjetId });
+                        { Value = updateMappingDto.ProjectId });
+
+                        command.Parameters.Add(new MySqlParameter("p_old_project_id", MySqlDbType.Int32)
+                        { Value = updateMappingDto.OldProjectId });
 
                         using (var reader = await command.ExecuteReaderAsync())
                         {
@@ -593,10 +601,121 @@ namespace RoleBasedAccessAPI.Data.Repository
                 return (false, $"Unexpected error: {ex.Message}");
             }
         }
-      
-          }
+
+        public async Task<(bool IsOk,object)> GetProjects(GetProjects getProjects)
+        {
+            try
+            {
+                using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+                {
+                    await connection.OpenAsync();
+
+                    using (var command = new MySqlCommand("sp_get_projects", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = getProjects.employee_id });
+                        var outputParam = new MySqlParameter("p_flag", MySqlDbType.Int32)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(outputParam);
+                        var projectsData = new List<Dictionary<string, object>>();
+
+                        using (var reader = await command.ExecuteReaderAsync())
+                        {
+                            
+
+                            while (await reader.ReadAsync())
+                            {
+                                var projectData = new Dictionary<string, object>();
+
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    string columnName = reader.GetName(i);
+                                    object columnValue = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                    projectData[columnName] = columnValue;
+                                }
+                                projectsData.Add(projectData);
+
+                            }
+                           
+
+                        }
+                        if ((int)outputParam.Value == -1)
+                        {
+                            return (false, new { message = "Access/Denied or No Permission" });
+                        }
+                        return (true, projectsData);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false,new { Message = "An unexpected error occurred.", Error = ex.Message });
+            }
+
+            return (false, new { message = "End of Function" });
+        }
+
+
+        public async Task<(bool IsOk, object)> GetProject(GetProject getProject)
+        {
+            try
+            {
+                using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
+                {
+                    await connection.OpenAsync();
+
+                    using (var command = new MySqlCommand("sp_get_project", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new MySqlParameter("p_user_id", MySqlDbType.Int32) { Value = getProject.employee_id });
+                        command.Parameters.Add(new MySqlParameter("p_project_id", MySqlDbType.Int32) { Value = getProject.project_id });
+                        var outputParam = new MySqlParameter("p_flag", MySqlDbType.Int32)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(outputParam);
+                        var projectData = new Dictionary<string, object>();
+
+                        using (var reader = await command.ExecuteReaderAsync())
+                        {
+
+
+                            if (await reader.ReadAsync())
+                            {
+
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    string columnName = reader.GetName(i);
+                                    object columnValue = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                    projectData[columnName] = columnValue;
+                                }
+                            }
+
+
+                        }
+                        if ((int)outputParam.Value == -1)
+                        {
+                            return (false, new { message = "Access/Denied or No Permission" });
+                        }
+                        return (true, projectData);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, new { Message = "An unexpected error occurred.", Error = ex.Message });
+            }
+
+            return (false, new { message = "End of Function" });
+        }
+
+    }
 }
-      
+
 
 
 

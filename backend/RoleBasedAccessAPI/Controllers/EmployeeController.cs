@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace RoleBasedAccessAPI.Controllers
 {
@@ -80,7 +81,7 @@ namespace RoleBasedAccessAPI.Controllers
         }
 
 
-        
+
         [HttpPost("GetEmployeeDetails")]
         public async Task<IActionResult> GetEmployeeDetailsAsync([FromBody] GetEmployeeDetail request)
         {
@@ -90,7 +91,9 @@ namespace RoleBasedAccessAPI.Controllers
             }
 
             // Hardcoded decryption key
-            string decryptionKey = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1";
+
+            string decryptionKey = "B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613";
+
 
             var employeeData = await _userRepository.GetEmployeeDetailsAsync(request, decryptionKey);
 
@@ -99,14 +102,14 @@ namespace RoleBasedAccessAPI.Controllers
                 return NotFound(new { Message = "Employee details not found or access denied" });
             }
 
-            if (employeeData is IDictionary<string, object> employeeDict)
+
+            if (employeeData is IEnumerable<IDictionary<string, object>> employeeList && employeeList.Any())
             {
-                return Ok(employeeDict);
+                return Ok(employeeList);
             }
 
             return StatusCode(500, employeeData);
         }
-
 
 
 
@@ -177,6 +180,41 @@ namespace RoleBasedAccessAPI.Controllers
                 return BadRequest(new { Message = message });
 
             return StatusCode(500, new { Message = message });
+        }
+
+
+        [HttpPost("GetProjects")]
+        public async Task<IActionResult> GetProjects([FromBody] GetProjects data)
+        {
+            var (isOk, result) = await _userRepository.GetProjects(data);
+            if (result is List<Dictionary<string, object>> projectsData && projectsData.Count > 0 && isOk)
+            {
+                return Ok(projectsData);
+            }
+
+            else if(isOk == false)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(500, new { message = "Database Error" });
+        }
+
+        [HttpPost("GetProject")]
+        public async Task<IActionResult> GetProject([FromBody] GetProject data)
+        {
+            var (isOk, result) = await _userRepository.GetProject(data);
+            if (result is Dictionary<string, object> projectData && projectData.Count > 0 && isOk)
+            {
+                return Ok(projectData);
+            }
+
+            else if (isOk == false)
+            {
+                return BadRequest(result);
+            }
+
+            return StatusCode(500, new { message = "Database Error" });
         }
 
     }

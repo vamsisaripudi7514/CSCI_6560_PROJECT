@@ -6,7 +6,8 @@ CREATE PROCEDURE sp_insert_project(
     IN p_project_description TEXT,
     IN p_manager_id INT,
     IN p_start_date DATE,
-    IN p_end_date DATE
+    IN p_end_date DATE,
+    OUT p_message TEXT
 )
 sp_insert_project:BEGIN
     DECLARE v_is_allowed BOOLEAN DEFAULT FALSE;
@@ -17,8 +18,8 @@ sp_insert_project:BEGIN
     IF v_is_allowed THEN
         SELECT COUNT(*) INTO v_project_exists FROM projects WHERE project_id = p_project_id;
         IF v_project_exists > 0 THEN
-            SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Project already exists.';
+            SET p_message = 'Project already exists.';
+            SELECT "Project already exists.";
             LEAVE sp_insert_project;
         END IF;
         INSERT INTO projects (
@@ -38,10 +39,10 @@ sp_insert_project:BEGIN
             p_end_date
         );
         CALL sp_audit_log(p_user_id, 'INSERT', 'projects', p_project_id);
-        
-        SELECT 'Project inserted successfully.' AS Message;
+        SET p_message = 'Project inserted successfully.';
+        SELECT 'Project inserted successfully.';
     ELSE
-        SELECT 'Access Denied: You do not have permission to insert projects.' AS Message;
+        SELECT 'Access Denied: You do not have permission to insert projects.';
     END IF;
 END$$
 DELIMITER ;

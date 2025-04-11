@@ -14,6 +14,9 @@ import EmployeeAdd from './components/EmployeeAdd';
 import ProjectView from './pages/ProjectView';
 import ProjectEdit from './components/ProjectEdit';
 import ProjectAdd from './components/ProjectAdd';
+import EmployeeProfileView from './pages/EmployeeProfileView';
+import UpdatePassword from './pages/UpdatePassword';
+import ResetPassword from './pages/ResetPassword';
 function App() {
   return (
     <div>
@@ -32,6 +35,9 @@ function App() {
           <Route path='/project-view' element={<ProjectView/>}/>
           <Route path='/project-edit' element={<ProjectEdit/>}/>
           <Route path='/project-add' element={<ProjectAdd/>}/>
+          <Route path='profile-view' element={<EmployeeProfileView/>}/>
+          <Route path='/update-password' element={<UpdatePassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

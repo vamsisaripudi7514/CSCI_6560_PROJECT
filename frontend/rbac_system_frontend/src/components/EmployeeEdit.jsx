@@ -2,24 +2,121 @@ import React from "react";
 import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 function EmployeeEdit() {
+    const location = useLocation();
+    const {
+        
+        employee_id,
+        token,
+        employee_header_button,
+        employee_add_button,
+        employee_update_button,
+        project_header_button,
+        project_add_button,
+        project_update_button,
+        audit_header_button,
+        employee_name,
+        employee_email,
+        employee_phone,
+        employee_role_id,
+        employee_manager_id,
+        employee_salary,
+        employee_is_working
+    } = location.state || {};
     const navigate = useNavigate();
-    const [employeeName, setEmployeeName] = useState("Vamsi");
-    const [employeeEmail, setEmployeeEmail] = useState("sample@gmail.com");
-    const [employeePhone, setEmployeePhone] = useState("1345678");
-    const [employeeRoleId, setEmployeeRoleId] = useState(2);
-    const [employeeManagerId, setEmployeeManagerId] = useState(30001);
-    const [employeeSalary, setEmployeeSalary] = useState("500000");
-    const [employeeIsWorking, setEmployeeIsWorking] = useState(true);
-    function handleSubmit(event){
+    const [employeeName, setEmployeeName] = useState(employee_name);
+    const [employeeEmail, setEmployeeEmail] = useState(employee_email);
+    const [employeePhone, setEmployeePhone] = useState(employee_phone);
+    const [employeeRoleId, setEmployeeRoleId] = useState(employee_role_id);
+    const [employeeManagerId, setEmployeeManagerId] = useState(employee_manager_id);
+    const [employeeSalary, setEmployeeSalary] = useState(employee_salary);
+    const [employeeIsWorking, setEmployeeIsWorking] = useState(employee_is_working);
+    async function handleSubmit(event) {
         event.preventDefault();
-        console.log("Employee Data:", {employeeName, employeeEmail, employeePhone, employeeRoleId, employeeManagerId, employeeSalary, employeeIsWorking});
+        console.log("Employee Data:", { employeeName, employeeEmail, employeePhone, employeeRoleId, employeeManagerId, employeeSalary, employeeIsWorking });
+        console.log("Employee ID:", employee_id);
+        console.log("Payload to be sent:", JSON.stringify(employeeManagerId, null, 2));
+        try{
+            const target_employee_id = sessionStorage.getItem("target_employee_id");
+            const response = await fetch("http://localhost:7011/api/Employee/updateEmployee",{
+                method: "PUT",
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    sourceEmployeeId: employee_id,
+                    targetEmployeeId: target_employee_id,
+                    employeeName : employeeName,
+                    employeeEmail : employeeEmail,
+                    employeePhone : employeePhone,
+                    employeeRoleId : employeeRoleId,
+                    employeeManagerId : employeeManagerId !== '' ? Number(employeeManagerId) : null,
+                    employeeSalary : employeeSalary,
+                    isWorking : employeeIsWorking
+                })
+            })
+            if(!response.ok){
+                console.error("Error in response:", response);
+                return;
+            }
+            const data = await response.json();
+            console.log("Data:", data);
+            navigate("/employee-view", {
+                state: {
+                    employee_name: employee_name,
+                    employee_id: employee_id,
+                    token: token,
+                    employee_header_button: employee_header_button,
+                    employee_add_button: employee_add_button,
+                    employee_update_button: employee_update_button,
+                    project_header_button: project_header_button,
+                    project_add_button: project_add_button,
+                    project_update_button: project_update_button,
+                    audit_header_button: audit_header_button
+                }
+            });
+        }
+        catch(error){
+            console.error("Error in response:", error);
+        }
+        navigate("/employee-view", {
+           state: {
+                employee_name: employee_name,
+                employee_id: employee_id,
+                token: token,
+                employee_header_button: employee_header_button,
+                employee_add_button: employee_add_button,
+                employee_update_button: employee_update_button,
+                project_header_button: project_header_button,
+                project_add_button: project_add_button,
+                project_update_button: project_update_button,
+                audit_header_button: audit_header_button,
+                employee_name: employee_name,
+                employee_email: employee_email,
+                employee_phone: employee_phone,
+                employee_role_id: employee_role_id,
+                employee_manager_id: employee_manager_id,
+                employee_salary: employee_salary,
+                employee_is_working: employee_is_working
+            }});
+
     }
     return (
         <div>
-            <Header />
+            <Header
+                employee_name={employee_name}
+                employee_id={employee_id}
+                token={token}
+                employee_header_button={employee_header_button}
+                employee_add_button={employee_add_button}
+                employee_update_button={employee_update_button}
+                project_header_button={project_header_button}
+                project_add_button={project_add_button}
+                project_update_button={project_update_button}
+                audit_header_button={audit_header_button}
+            />
             <div className="card card-primary" style={{ alignItems: "center" }}>
-                <form style={{ borderRadius: "5px", margin: "50px auto", border: "1px solid #007bff", width: "50%" }} onSubmit={ handleSubmit }>
+                <form style={{ borderRadius: "5px", margin: "50px auto", border: "1px solid #007bff", width: "50%" }} onSubmit={handleSubmit}>
                     <div className="card-header" style={{ backgroundColor: "#007bff", color: "white" }}>
                         <h2 className="card-title">EDIT EMPLOYEE DATA</h2>
                     </div>
@@ -32,7 +129,7 @@ function EmployeeEdit() {
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label htmlFor="exampleInputEmail1">Name</label>
-                                    <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Name" value={employeeName} onChange={(e) => { setEmployeeName(e.target.value) }} />
+                                    <input type="text" className="form-control" id="exampleInputEmail1" placeholder="Enter Name" value={employeeName} onChange={(e) => { setEmployeeName(e.target.value); console.log(employeeName);}} />
                                 </div>
 
                             </div>
@@ -79,12 +176,34 @@ function EmployeeEdit() {
                             Is Working
                         </label>
                     </div>
-                    
+
                     <div className="card-footer" >
-                    <div className="d-flex justify-content-center align-items-center">
-                    <button type="submit" className="btn btn-primary" onClick={()=>{navigate('/employee-view')}}>Submit</button>
+                        <div className="d-flex justify-content-center align-items-center">
+                            
+                            <button type="submit" className="btn btn-primary">
+                                {/* <Link to="/employee-view" className="btn btn-primary"
+                                state={{
+                                    employee_id: employee_id,
+                                    token: token,
+                                    employee_header_button: employee_header_button,
+                                    employee_add_button: employee_add_button,
+                                    employee_update_button: employee_update_button,
+                                    project_header_button: project_header_button,
+                                    project_add_button: project_add_button,
+                                    project_update_button: project_update_button,
+                                    audit_header_button: audit_header_button,
+                                    employee_name: employee_name,
+                                    employee_email: employee_email,
+                                    employee_phone: employee_phone,
+                                    employee_role_id: employee_role_id,
+                                    employee_manager_id: employee_manager_id,
+                                    employee_salary: employee_salary,
+                                    employee_is_working: employee_is_working
+                                }}
+                                >Submit</Link> */}Submit
+                                </button>
                         </div>
-                        
+
                     </div>
                 </form>
             </div>

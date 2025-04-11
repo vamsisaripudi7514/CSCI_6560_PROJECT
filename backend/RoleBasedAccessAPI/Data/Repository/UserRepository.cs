@@ -378,8 +378,10 @@ namespace RoleBasedAccessAPI.Data.Repository
                                 var row = new Dictionary<string, object>();
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
+
                                     row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
                                     Console.WriteLine(reader.GetName(i));
+
                                 }
                                 results.Add(row);
                             }
@@ -393,6 +395,7 @@ namespace RoleBasedAccessAPI.Data.Repository
                 return new { Message = "An unexpected error occurred.", Error = ex.Message };
             }
         }
+
 
 
         public async Task<bool> UpdateEmployeeAsync(UpdateEmployee updateEmployeeDto, string encryptionKey)

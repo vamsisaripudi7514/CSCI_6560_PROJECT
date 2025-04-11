@@ -91,7 +91,9 @@ namespace RoleBasedAccessAPI.Controllers
             }
 
             // Hardcoded decryption key
+
             string decryptionKey = "B17D2A77D226A5F55F122D5E92F8104E7E45C8E98923322424563E8F0367B613";
+
 
             var employeeData = await _userRepository.GetEmployeeDetailsAsync(request, decryptionKey);
 
@@ -100,6 +102,7 @@ namespace RoleBasedAccessAPI.Controllers
                 return NotFound(new { Message = "Employee details not found or access denied" });
             }
 
+
             if (employeeData is IEnumerable<IDictionary<string, object>> employeeList && employeeList.Any())
             {
                 return Ok(employeeList);
@@ -107,8 +110,6 @@ namespace RoleBasedAccessAPI.Controllers
 
             return StatusCode(500, employeeData);
         }
-
-
 
 
 

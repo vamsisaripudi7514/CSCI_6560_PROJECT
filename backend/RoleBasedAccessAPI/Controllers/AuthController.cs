@@ -32,10 +32,8 @@ namespace RoleBasedAccessAPI.Controllers
             if (userId < 0)
                 return BadRequest(new { flag = -3, message = "Error logging in" });
 
-            // ✅ Store User ID in Session
             HttpContext.Session.SetInt32("UserId", userId);
 
-            // ✅ Generate JWT Token with UserID & Password
             var token = JwtHelper.GenerateJwtToken(loginDto.Username, userId, loginDto.Password);
             return Ok(new { flag = 1, message = "Login successful", token, employee_id = userId });
         }

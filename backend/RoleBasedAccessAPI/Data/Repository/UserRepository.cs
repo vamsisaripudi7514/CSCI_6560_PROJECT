@@ -18,10 +18,9 @@ namespace RoleBasedAccessAPI.Data.Repository
             _context = context;
         }
 
-        // ✅ User Login (Retaining working version)
         public async Task<int> LoginUserAsync(UserLoginDto loginDto)
         {
-            int userId = -3; // Default error code
+            int userId = -3; 
 
             using (var connection = (MySqlConnection)_context.Database.GetDbConnection())
             {
@@ -31,15 +30,12 @@ namespace RoleBasedAccessAPI.Data.Repository
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    // Input Parameters
                     command.Parameters.Add(new MySqlParameter("p_username", MySqlDbType.VarChar) { Value = loginDto.Username });
                     command.Parameters.Add(new MySqlParameter("p_user_password", MySqlDbType.VarChar) { Value = loginDto.Password });
 
-                    // ✅ Convert decryption key to HEX format
                     string decryptionKeyHex = "AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1";
                     command.Parameters.Add(new MySqlParameter("p_decryption_key", MySqlDbType.VarChar) { Value = decryptionKeyHex });
 
-                    // Output Parameter
                     var outputParam = new MySqlParameter("p_user_id", MySqlDbType.Int32)
                     {
                         Direction = ParameterDirection.Output

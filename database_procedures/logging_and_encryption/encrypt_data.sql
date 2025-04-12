@@ -9,11 +9,7 @@ CREATE PROCEDURE sp_encrypt_data(
 BEGIN
     DECLARE temp_value BLOB;
 
-    IF purpose = 'password' THEN
-        SELECT AES_ENCRYPT(raw_value, UNHEX(encryption_key)) INTO temp_value;
-    ELSEIF purpose = 'salary' THEN
-        SELECT AES_ENCRYPT(raw_value, UNHEX(encryption_key)) INTO temp_value;
-    END IF;
+    SELECT AES_ENCRYPT(raw_value, UNHEX(encryption_key)) INTO temp_value;
 
     SET encrypted_value = temp_value;
 END$$

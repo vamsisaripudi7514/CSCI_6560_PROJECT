@@ -43,7 +43,7 @@ const Login =  () => {
           
         //   console.log("Login data:", data);
           sessionStorage.setItem("employee_id", data.employee_id);
-          sessionStorage.setItem("token", data.token);
+          sessionStorage.setItem("token", "Bearer " + data.token);
           console.log("Token:", sessionStorage.getItem("token"));
           console.log("Employee ID:", sessionStorage.getItem("employee_id"));
           const buttons = await handleButtonVisibility();
@@ -87,7 +87,7 @@ const Login =  () => {
         }
         const response = await fetch("http://localhost:7011/api/Auth/ButtonVisibility",{
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json','Authorization':sessionStorage.getItem("token") },
             body: JSON.stringify({ employeeId: employee_id })
         })
         const data = await response.json();

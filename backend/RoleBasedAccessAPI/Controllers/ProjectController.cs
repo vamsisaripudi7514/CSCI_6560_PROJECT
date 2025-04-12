@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using RoleBasedAccessAPI.Data.Model;
 using RoleBasedAccessAPI.Data.Repository;
+using RoleBasedAccessAPI.Utility;
 using System.Threading.Tasks;
 
 namespace RoleBasedAccessAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JWTAuthorize]
     public class ProjectController : ControllerBase
     {
         private readonly ProjectRepository _projectRepository;

@@ -52,7 +52,7 @@ const Login =  () => {
             state:{
                 employee_name: username,
                 employee_id: data.employee_id,
-                token: data.token,
+                token: "Bearer "+data.token,
                 employee_header_button: buttons.employee_header_button,
                 employee_add_button: buttons.employee_add_button,
                 employee_update_button: buttons.employee_update_button,

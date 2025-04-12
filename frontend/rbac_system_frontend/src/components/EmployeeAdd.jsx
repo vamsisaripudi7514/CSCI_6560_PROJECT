@@ -37,7 +37,7 @@ function EmployeeAdd(){
             const response = await fetch("http://localhost:7011/api/Employee/InsertEmployee",{
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json','Authorization':token
                 },
                 body: JSON.stringify(
                     {

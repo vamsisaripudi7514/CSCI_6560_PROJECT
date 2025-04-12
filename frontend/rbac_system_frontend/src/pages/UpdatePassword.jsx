@@ -42,6 +42,7 @@ function UpdatePassword() {
             }),
             headers: {
                 "Content-Type": "application/json",
+                'Authorization':token
             }
         })
         .then((response) => {

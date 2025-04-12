@@ -10,7 +10,7 @@ function AuditLogs() {
             try {
                 const response = await fetch('http://localhost:7011/api/AuditLogs/GetAuditLogs', {
                     method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json','Authorization':token  },
                     body: JSON.stringify({ employeeID: employee_id })
                 });
                 const data = await response.json();

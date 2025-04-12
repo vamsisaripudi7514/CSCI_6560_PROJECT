@@ -42,7 +42,7 @@ function EmployeeEdit() {
             const target_employee_id = sessionStorage.getItem("target_employee_id");
             const response = await fetch("http://localhost:7011/api/Employee/updateEmployee",{
                 method: "PUT",
-                headers: { 'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json','Authorization':token},
                 body: JSON.stringify({
                     sourceEmployeeId: employee_id,
                     targetEmployeeId: target_employee_id,

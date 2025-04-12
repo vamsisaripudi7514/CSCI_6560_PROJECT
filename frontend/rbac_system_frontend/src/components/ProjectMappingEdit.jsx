@@ -25,7 +25,7 @@ function ProjectMappingEdit() {
             try{
                 const response = await fetch(`http://localhost:7011/api/Project/projectMappingUpdateList`,{
                     method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json','Authorization':token },
                     body: JSON.stringify({ employeeID: employee_id })
                 });
                 const data = await response.json();
@@ -70,7 +70,7 @@ function ProjectMappingEdit() {
             console.log("Project ID type:", typeof new_project_id);
             const response1 = await fetch("http://localhost:7011/api/Employee/updateProjectMapping",{
                 method: "PUT",
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' ,'Authorization':token},
                 body: JSON.stringify({ sourceEmployeeId: employee_id, targetEmployeeId: targetEmployeeId ,projectId: new_project_id, oldProjectId: project_id })
             });
             const data = await response1.json();

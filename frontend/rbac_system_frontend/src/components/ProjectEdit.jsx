@@ -39,7 +39,7 @@ function ProjectEdit() {
         try {
             const response = await fetch('http://localhost:7011/api/Project/updateProject', {
                 method: "PUT",
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' ,'Authorization':token},
                 body: JSON.stringify({
                     sourceEmployeeId: employee_id,
                     projectId: project_id,

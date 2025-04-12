@@ -33,7 +33,7 @@ function EmployeeView() {
             try {
                 const response = await fetch("http://localhost:7011/api/Employee/GetEmployeeDetails", {
                     method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json','Authorization':token },
                     body: JSON.stringify({ sourceEmployeeId: source_employee_id, targetEmployeeId: target_employee_id })
                 });
                 const data = await response.json();
@@ -49,7 +49,7 @@ function EmployeeView() {
             try{
                 const response = await fetch("http://localhost:7011/api/Employee/selectTimesheet", {
                     method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json' ,'Authorization':token},
                     body: JSON.stringify({ sourceEmployeeId: source_employee_id , targetEmployeeId: target_employee_id })
                 })
                 const data = await response.json();

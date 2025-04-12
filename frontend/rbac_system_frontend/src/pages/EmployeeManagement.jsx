@@ -35,7 +35,9 @@ function EmployeeManagement() {
 
         const getEmployees = async () => {
             try {
-                const response = await fetch(`http://localhost:7011/api/Employee/GetAllEmployees?userId=${employee_id}`);
+                const response = await fetch(`http://localhost:7011/api/Employee/GetAllEmployees?userId=${employee_id}`,{
+                    headers:{'Authorization':token},
+                });
                 const data = await response.json();
                 console.log("Data:", data);
                 setEmployees(Array.isArray(data) ? data : []);

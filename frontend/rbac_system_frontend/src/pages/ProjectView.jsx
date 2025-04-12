@@ -29,7 +29,7 @@ function ProjectView() {
             try{
                 const response = await fetch(`http://localhost:7011/api/Employee/GetProject`,{
                     method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json' ,'Authorization':token},
                     body: JSON.stringify({ employee_id: employee_id, project_id: project_id })
                 });
                 const data = await response.json();

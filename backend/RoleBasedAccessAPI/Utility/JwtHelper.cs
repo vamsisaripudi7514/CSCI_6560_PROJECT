@@ -20,7 +20,9 @@ namespace RoleBasedAccessAPI.Utility
             {
                 new Claim("Username", username),
                 new Claim("UserId", userId.ToString()),
+
                 new Claim("Password", password)  // Storing password (Only for development; not recommended in production)
+
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -8,21 +8,7 @@ CREATE PROCEDURE sp_decrypt_data(
 )
 BEGIN
     DECLARE temp_value VARCHAR(255);
-    IF purpose = 'password' THEN
-        SELECT CAST(
-            AES_DECRYPT(
-                encrypted_value, 
-                UNHEX(decryption_key)
-            ) AS CHAR(255)
-        ) INTO temp_value;
-    ELSEIF purpose = 'salary' THEN
-        SELECT CAST(
-            AES_DECRYPT(
-                encrypted_value, 
-                UNHEX(decryption_key)
-            ) AS CHAR(255)
-        ) INTO temp_value;
-    END IF;
+        SELECT CAST(AES_DECRYPT(encrypted_value, UNHEX(decryption_key)) AS CHAR(255)) INTO temp_value;
     SET decrypted_value = temp_value;
 END$$
 

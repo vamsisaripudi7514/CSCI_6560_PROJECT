@@ -1,5 +1,5 @@
 -- Mock Data for CSCI 6560 Role-Based Hierarchical Access System
-
+-- SET foreign_key_checks = 0;
 -- 1. Insert Roles into user_roles
 INSERT INTO user_roles (role_id, role_name, role_description) VALUES
   (1, 'Admin', 'Administrator with full permissions'),
@@ -122,6 +122,7 @@ INSERT INTO audit_logs (log_id, user_id, db_action, db_table_name, record_id) VA
 -- -----------------------------------------------------------
 -- 6. Insert Users (Login credentials for the employees)
 INSERT INTO users (employee_id, username, user_password, last_login, failed_attempts, is_locked) VALUES
+(1,'Admin',AES_ENCRYPT('admin_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')),NOW(), 0, FALSE),
   (10001, 'hr',AES_ENCRYPT('hr_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')),NOW(), 0, FALSE),
   (20001, 'director', AES_ENCRYPT('director_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')), NOW(), 0, FALSE),
   (30001, 'manager1', AES_ENCRYPT('manager_pass', UNHEX('AFE9BCD9E0C659720653DA721409A5001E62C561C03949C3341146C3E8FF4BD1')), NOW(), 0, FALSE),

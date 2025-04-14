@@ -5,7 +5,7 @@ CREATE PROCEDURE sp_update_project_mapping(
     p_project_id INT,
     p_old_project_id INT
 )
-BEGIN
+sp_update_project_mapping:BEGIN
 
     DECLARE v_is_allowed BOOLEAN DEFAULT FALSE;
     DECLARE v_is_role_based BOOLEAN DEFAULT FALSE;
@@ -36,7 +36,13 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Role Based Access Denied';
     END IF;
-
+    IF p_old_project_id IS NULL THEN
+        INSERT INTO employee_projects(employee_id, project_id)
+        VALUES (p_employee_id, p_project_id);
+        CALL sp_audit_log(p_user_id, 'INSERT', 'employee_projects', p_employee_id);
+        SELECT 'Project Mapping Created Successfully' AS Message;
+        LEAVE sp_update_project_mapping;
+    END IF;
     UPDATE employee_projects
     SET project_id = p_project_id
     WHERE employee_id  = p_employee_id AND project_id = p_old_project_id;

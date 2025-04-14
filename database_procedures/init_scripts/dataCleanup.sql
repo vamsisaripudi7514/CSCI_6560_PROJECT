@@ -1,0 +1,11 @@
+SET foreign_key_checks = 0;
+USE rbac_system;
+TRUNCATE TABLE employees;
+TRUNCATE TABLE projects;
+TRUNCATE TABLE employee_projects;
+TRUNCATE TABLE audit_logs;
+TRUNCATE TABLE users;
+TRUNCATE TABLE user_roles;
+TRUNCATE TABLE access_permissions;
+TRUNCATE TABLE timesheets;
+SET foreign_key_checks = 1;

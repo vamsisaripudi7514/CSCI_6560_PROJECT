@@ -6,6 +6,6 @@
         public int TargetEmployeeId { get; set; }
         public int ProjectId { get; set; }
 
-        public int OldProjectId { get; set; }
+        public int? OldProjectId { get; set; }
     }
 }
